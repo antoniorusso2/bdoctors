@@ -13,6 +13,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+  position: relative;
+}
+
 .hero-title {
   background: rgb(252, 154, 177);
   background: linear-gradient(
@@ -59,5 +70,12 @@
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+.footer-custom {
+  background-color: rgb(51, 29, 58);
+  > * {
+    color: white;
   }
 }
