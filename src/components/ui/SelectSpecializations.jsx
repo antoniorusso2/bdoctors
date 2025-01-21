@@ -10,8 +10,6 @@ export default function SelectSpecializations({ ...props }) {
     const fetchSpecializations = async () => {
       try {
         const { data } = await api.get("/doctors/specializations");
-        console.log(data);
-
         setSpecializations(data);
       } catch (err) {
         console.error(err);
