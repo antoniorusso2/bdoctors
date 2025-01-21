@@ -3,6 +3,7 @@ import { api } from "../../../lib/api";
 import fetchDoctors from "../../../lib/api/queries";
 import { useEffect } from "react";
 import { useState } from "react";
+import Card from "../../Card/Card";
 
 export default function HomePage() {
   // ARRAY TEMPORANEI
@@ -142,9 +143,12 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="container">
+      <section className="container mb-4 d-flex align-items-center justify-content-between">
         <div>
-          <h1 className="mb-4">I migliori medici specialisti vicino a te</h1>
+          <h1 className="">I migliori medici specialisti vicino a te</h1>
+        </div>
+        <div>
+          <a href="#">Ricerca avanzata</a>
         </div>
       </section>
       <section className="container mb-5">
@@ -171,13 +175,7 @@ export default function HomePage() {
         <div className="row g-4 align-itmes-center">
           {doctorsList.map((doctor) => (
             <div key={doctor.id} className="col-6">
-              <div className="card p-3">
-                <p className="card-title">
-                  {doctor.first_name}
-                  <span> </span>
-                  {doctor.last_name}
-                </p>
-              </div>
+              <Card doctor={doctor} />
             </div>
           ))}
         </div>
