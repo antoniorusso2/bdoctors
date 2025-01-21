@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container">
         <Link className="navbar-brand" to="/">
           <img
-            src="bdoctors-logo.png"
+            src="/bdoctors-logo.png"
             alt="Bdoctors Logo"
             className="d-inline-block align-text-top me-2
             img-fluid"
