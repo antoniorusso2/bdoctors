@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useFilter } from "../context/FilterProvider";
 
 const Navbar = () => {
+  const { setFilters } = useFilter();
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const doctor = formData.get("doctor");
+
+    setFilters((p) => ({ ...p, doctor }));
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div className="container">
@@ -38,16 +50,15 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
+          <form className="d-flex" onSubmit={handleSearch}>
             <input
               className="form-control me-2"
               type="search"
-              placeholder="Cerca specializzazione"
+              name="doctor"
+              placeholder="Cerca dottore"
               aria-label="Search"
             />
-            <button className="btn btn-outline-primary" type="submit">
-              Cerca
-            </button>
+            <button className="btn btn-outline-primary">Cerca</button>
           </form>
         </div>
       </div>

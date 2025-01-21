@@ -4,15 +4,22 @@ import Card from "../../ui/Card";
 import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
+import { useFilter } from "../../../context/FilterProvider";
 
-export default function HomePage() {
+export default function HomePage({ searchByDoctor }) {
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
-  const [search, setSearch] = useState("");
+
+  const {
+    filters: { specializations, doctor },
+    setFilters,
+  } = useFilter();
 
   useEffect(() => {
     api
-      .get(`/doctors`, { params: { specializations: search } })
+      .get(`/doctors`, {
+        params: { specializations, doctor },
+      })
       .then((res) => {
         setDoctorsList(res.data);
       })
@@ -20,7 +27,7 @@ export default function HomePage() {
         console.error(err);
       })
       .finally(() => setIsLoading(false));
-  }, [search]);
+  }, [specializations, doctor]);
 
   return (
     <>
@@ -40,7 +47,12 @@ export default function HomePage() {
           <SelectSpecializations
             placeholder="Tutte le specializzazioni"
             className="w-50"
-            onChange={(values) => setSearch(values.map(({ value }) => value))}
+            onChange={(values) =>
+              setFilters((p) => ({
+                ...p,
+                specializations: values.map(({ value }) => value),
+              }))
+            }
           />
         </section>
       </section>
