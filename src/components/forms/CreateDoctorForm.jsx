@@ -1,17 +1,10 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import Select from "react-select";
 import SubmitButton from "../ui/SubmitButton";
 import { api } from "../../lib/api/index";
 import { useNavigate } from "react-router-dom";
-
-const specializations = [
-  { value: "cardiology", label: "Cardiology" },
-  { value: "dermatology", label: "Dermatology" },
-  { value: "neurology", label: "Neurology" },
-  { value: "orthopedics", label: "Orthopedics" },
-  { value: "pediatrics", label: "Pediatrics" },
-];
+import FormAlert from "../ui/FormAlert";
+import SelectSpecializations from "../ui/SelectSpecializations";
 
 export default function CreateDoctorForm() {
   const navigate = useNavigate();
@@ -164,11 +157,8 @@ export default function CreateDoctorForm() {
             control={control}
             rules={{ required: "Please select at least one specialization" }}
             render={({ field }) => (
-              <Select
+              <SelectSpecializations
                 {...field}
-                options={specializations}
-                isMulti
-                closeMenuOnSelect={false}
                 className={errors.specializations ? "is-invalid" : ""}
               />
             )}
