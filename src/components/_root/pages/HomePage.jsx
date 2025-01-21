@@ -3,8 +3,10 @@ import { useState } from "react";
 import Card from "../../ui/Card";
 import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
+import { LoaderCircle } from "lucide-react";
 
 export default function HomePage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -16,22 +18,9 @@ export default function HomePage() {
       })
       .catch((err) => {
         console.error(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [search]);
-
-  console.log(search);
-
-  // useEffect(() => {
-  //   // Filtra i medici in base alla specializzazione selezionata
-  //   if (search === "") {
-  //     setDoctorsList(defaultDoctorsArray); // Mostra tutti i medici se non c'è filtro
-  //   } else {
-  //     const filteredDoctors = defaultDoctorsArray.filter(
-  //       (doctor) => doctor.specialization === search
-  //     );
-  //     setDoctorsList(filteredDoctors);
-  //   }
-  // }, [search]);
 
   return (
     <>
@@ -56,13 +45,19 @@ export default function HomePage() {
         </section>
       </section>
       <section className="container">
-        <div className="row g-4 align-itmes-center">
-          {doctorsList.map((doctor) => (
-            <div key={doctor.id} className="col-6">
-              <Card doctor={doctor} />
-            </div>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="d-flex justify-content-center">
+            <LoaderCircle className="loader" size={60} />
+          </div>
+        ) : (
+          <div className="row g-4 align-itmes-center">
+            {doctorsList.map((doctor) => (
+              <div key={doctor.id} className="col-6">
+                <Card doctor={doctor} />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );
