@@ -15,7 +15,7 @@ export default function HomePage() {
       last_name: "Rossi",
       phone: "+39 333 1234567",
       address: "Roma",
-      specalization: "Ematologia",
+      specialization: "Ematologia",
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export default function HomePage() {
       last_name: "Bianchi",
       phone: "+39 333 9876543",
       address: "Milano",
-      specalization: "Geriatria",
+      specialization: "Geriatria",
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ export default function HomePage() {
       last_name: "Verdi",
       phone: "+39 333 4567890",
       address: "Napoli",
-      specalization: "Cardiologia",
+      specialization: "Cardiologia",
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export default function HomePage() {
       last_name: "Neri",
       phone: "+39 333 1122334",
       address: "Firenze",
-      specalization: "Ginecologia",
+      specialization: "Ginecologia",
     },
     {
       id: 5,
@@ -51,7 +51,7 @@ export default function HomePage() {
       last_name: "Mancini",
       phone: "+39 333 5566778",
       address: "Torino",
-      specalization: "Tossicologia",
+      specialization: "Tossicologia",
     },
   ];
 
@@ -132,7 +132,7 @@ export default function HomePage() {
       setDoctorsList(defaultDoctorsArray); // Mostra tutti i medici se non c'è filtro
     } else {
       const filteredDoctors = defaultDoctorsArray.filter(
-        (doctor) => doctor.specalization === search
+        (doctor) => doctor.specialization === search
       );
       setDoctorsList(filteredDoctors);
     }
@@ -143,33 +143,38 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="container mb-4 d-flex align-items-center justify-content-between">
-        <div>
-          <h1 className="">I migliori medici specialisti vicino a te</h1>
+      <section className=" d-flex flex-column justify-content-center hero-title mb-4 ">
+        <div className=" container d-flex  flex-column align-items-center mb-4 justify-content-between p-4">
+          <h1 className="mb-4 text-center ">
+            I migliori medici specialisti<br></br>vicino a te
+          </h1>
+          <div className="search-link-container">
+            <a className="search-link" href="#">
+              Ricerca avanzata
+            </a>
+          </div>
         </div>
-        <div>
-          <a href="#">Ricerca avanzata</a>
-        </div>
-      </section>
-      <section className="container mb-5">
-        <form className="form">
-          <select
-            className="form-select"
-            name="specs-filter"
-            id="specs-filter"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          >
-            <option defaultValue={""} value={""}>
-              Tutte le specializzazioni
-            </option>
-            {defaultSpecalizationsArray.map((s) => (
-              <option key={s.id} value={s.name}>
-                {s.name}
+
+        <section className="container d-flex justify-content-center mb-5 ">
+          <form className="form form-container">
+            <select
+              className="form-select spec-sel"
+              name="specs-filter"
+              id="specs-filter"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            >
+              <option defaultValue={""} value={""}>
+                Tutte le specializzazioni
               </option>
-            ))}
-          </select>
-        </form>
+              {defaultSpecalizationsArray.map((s) => (
+                <option key={s.id} value={s.name}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </form>
+        </section>
       </section>
       <section className="container">
         <div className="row g-4 align-itmes-center">
