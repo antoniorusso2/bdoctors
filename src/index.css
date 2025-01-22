@@ -65,13 +65,45 @@ main {
   }
 }
 
-.main-card {
+.card-body-background {
+  background: rgb(88, 30, 129);
+  background: linear-gradient(
+    180deg,
+    rgba(191, 23, 242, 0.228) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-radius: 1rem;
 }
 
 .starAvg {
   height: 1.2rem;
 }
 
+.card-body {
+  text-decoration: none;
+}
+
 .star {
   height: 1rem;
+}
+
+.btn.contact-btn {
+  /* background: linear-gradient(
+    0deg,
+    rgba(255, 98, 132, 0.264) 0%,
+    rgba(0, 0, 0, 0) 100%
+  ); */
+  background-color: white;
+  border-radius: 2rem;
+  /* border: 1px solid rgb(97, 37, 135); */
+}
+
+.btn.contact-btn:hover {
+  background-color: rgba(198, 122, 248, 0.27);
+}
+
+.btn-contact-container {
+  background-color: rgba(243, 231, 251, 0.978);
+  padding: 0.3rem 0.3rem;
+  border-radius: 2rem;
 }
