@@ -64,6 +64,24 @@ main {
   animation: spin 1s linear infinite;
 }
 
+.footer-custom {
+  background-color: rgb(51, 29, 58);
+  > * {
+    color: white;
+  }
+}
+
+.select.specializations {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .select.specializations {
+    max-width: 30rem;
+  }
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

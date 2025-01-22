@@ -5,9 +5,10 @@ import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
+
 import useParallaxEffect from "../../ui/Parallax";
 
-export default function HomePage({ searchByDoctor }) {
+export default function HomePage() {
   useParallaxEffect();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -36,30 +37,28 @@ export default function HomePage({ searchByDoctor }) {
     <>
       <div className="parallax-bg"></div>
 
-      <section className=" d-flex flex-column justify-content-center hero-title mb-4 ">
-        <div className=" container-fluid d-flex  flex-column align-items-center mb-4 justify-content-between p-4">
+      <section className="d-flex flex-column justify-content-center hero-title mb-4 ">
+        <div className="container-fluid d-flex flex-column align-items-center mb-4 justify-content-between p-4">
           <h1 className="mb-4 text-center ">
             I migliori medici specialisti<br></br>vicino a te
           </h1>
           <div className="search-link-container">
-            <a className="search-link" href="#">
+            <Link to="/doctors/search" className="search-link">
               Ricerca avanzata
-            </a>
+            </Link>
           </div>
         </div>
 
-        <section className="container d-flex justify-content-center mb-5 ">
-          <SelectSpecializations
-            placeholder="Tutte le specializzazioni"
-            className="w-50"
-            onChange={(values) =>
-              setFilters((p) => ({
-                ...p,
-                specializations: values.map(({ value }) => value),
-              }))
-            }
-          />
-        </section>
+        <SelectSpecializations
+          placeholder="Tutte le specializzazioni"
+          className="select specializations mb-5 p-4"
+          onChange={(values) =>
+            setFilters((p) => ({
+              ...p,
+              specializations: values.map(({ value }) => value),
+            }))
+          }
+        />
       </section>
       <section className="custom-container">
         {isLoading ? (
