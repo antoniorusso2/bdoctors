@@ -32,7 +32,7 @@ export default function HomePage({ searchByDoctor }) {
   return (
     <>
       <section className=" d-flex flex-column justify-content-center hero-title mb-4 ">
-        <div className=" container d-flex  flex-column align-items-center mb-4 justify-content-between p-4">
+        <div className=" container-fluid d-flex  flex-column align-items-center mb-4 justify-content-between p-4">
           <h1 className="mb-4 text-center ">
             I migliori medici specialisti<br></br>vicino a te
           </h1>
@@ -64,7 +64,7 @@ export default function HomePage({ searchByDoctor }) {
         ) : (
           <div className="row g-4 align-itmes-center">
             {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-6">
+              <div key={doctor.id} className="col-4 mb-3">
                 <Card doctor={doctor} />
               </div>
             ))}
