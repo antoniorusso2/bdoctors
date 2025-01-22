@@ -56,7 +56,7 @@ export default function HomePage({ searchByDoctor }) {
           />
         </section>
       </section>
-      <section className="container">
+      <section className="custom-container">
         {isLoading ? (
           <div className="d-flex justify-content-center">
             <LoaderCircle className="loader" size={60} />

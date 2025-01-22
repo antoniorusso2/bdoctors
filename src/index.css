@@ -9,6 +9,11 @@ main {
   position: relative;
 }
 
+.custom-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .hero-title {
   background: rgb(252, 154, 177);
   background: linear-gradient(
