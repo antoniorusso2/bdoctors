@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useFilter } from "../context/FilterProvider";
+import SearchDoctorInput from "./ui/SearchDoctorInput";
 
 const Navbar = () => {
   const { setFilters } = useFilter();
@@ -51,13 +52,7 @@ const Navbar = () => {
             </li>
           </ul>
           <form className="d-flex" onSubmit={handleSearch}>
-            <input
-              className="form-control me-2"
-              type="search"
-              name="doctor"
-              placeholder="Cerca dottore"
-              aria-label="Search"
-            />
+            <SearchDoctorInput className="me-2" />
             <button className="btn btn-outline-primary">Cerca</button>
           </form>
         </div>
