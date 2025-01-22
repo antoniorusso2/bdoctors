@@ -21,7 +21,7 @@ export default function HomePage({ searchByDoctor }) {
         params: { specializations, doctor },
       })
       .then((res) => {
-        setDoctorsList(res.data);
+        setDoctorsList(res.data.doctors);
       })
       .catch((err) => {
         console.error(err);
