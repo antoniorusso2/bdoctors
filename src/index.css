@@ -1,4 +1,3 @@
-
 #root {
   display: flex;
   flex-direction: column;
@@ -64,4 +63,15 @@ main {
   > * {
     color: white;
   }
+}
+
+.main-card {
+}
+
+.starAvg {
+  height: 1.2rem;
+}
+
+.star {
+  height: 1rem;
 }
