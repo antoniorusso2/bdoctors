@@ -6,7 +6,7 @@ import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
 
-export default function HomePage({ searchByDoctor }) {
+export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
 
@@ -43,18 +43,16 @@ export default function HomePage({ searchByDoctor }) {
           </div>
         </div>
 
-        <section className="container d-flex justify-content-center mb-5 ">
-          <SelectSpecializations
-            placeholder="Tutte le specializzazioni"
-            className="w-50"
-            onChange={(values) =>
-              setFilters((p) => ({
-                ...p,
-                specializations: values.map(({ value }) => value),
-              }))
-            }
-          />
-        </section>
+        <SelectSpecializations
+          placeholder="Tutte le specializzazioni"
+          className="select specializations mb-5 p-4"
+          onChange={(values) =>
+            setFilters((p) => ({
+              ...p,
+              specializations: values.map(({ value }) => value),
+            }))
+          }
+        />
       </section>
       <section className="container">
         {isLoading ? (
