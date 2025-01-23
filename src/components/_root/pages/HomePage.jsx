@@ -38,7 +38,7 @@ export default function HomePage() {
     <>
       <div className="parallax-bg"></div>
 
-      <section className="d-flex flex-column justify-content-center hero-title mb-4 ">
+      <section className="d-flex flex-column justify-content-center hero-title mb-4">
         <div className="container-fluid d-flex flex-column align-items-center mb-4 justify-content-between p-4">
           <h1 className="mb-4 text-center">
             I migliori medici specialisti<br></br>vicino a te

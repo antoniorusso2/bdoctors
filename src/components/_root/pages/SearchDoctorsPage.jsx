@@ -12,18 +12,22 @@ export default function SearchDoctorsPage() {
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { filters } = useFilter();
+  const { filters, setFilters } = useFilter();
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (
+      !filters.specializations.length &&
+      !filters.doctor &&
+      !filters.min_rating
+    )
+      return;
     setIsLoading(true);
     setError(null);
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
 
     try {
       const response = await api.get("/doctors/search", {
-        params: { ...data, specializations: filters.specializations },
+        params: filters,
       });
       setResults(response.data);
     } catch (err) {
@@ -32,7 +36,7 @@ export default function SearchDoctorsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   console.log(filters);
 
@@ -67,8 +71,10 @@ export default function SearchDoctorsPage() {
                 <select
                   className="form-select"
                   id="minRating"
-                  name="min_rating"
-                  defaultValue={filters.minRating}
+                  value={filters.min_rating}
+                  onChange={(e) =>
+                    setFilters({ ...filters, min_rating: e.target.value })
+                  }
                 >
                   <option value="">Tutte le valutazioni</option>
                   <option value="5">5 stelle</option>
@@ -82,7 +88,7 @@ export default function SearchDoctorsPage() {
                 <label htmlFor="specializations" className="form-label">
                   Specializzazione
                 </label>
-                <SelectSpecializations id="specializations" className="z-100" />
+                <SelectSpecializations id="specializations" />
               </div>
               <div className="px-3">
                 <SubmitButton pending={isLoading} className="w-100">
@@ -110,13 +116,12 @@ export default function SearchDoctorsPage() {
             </div>
           )}
           {!!results.length && (
-            <div className="mt-4">
-              <h2>Risultati della ricerca</h2>
-              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                {results.map((doctor) => (
-                  <Card key={doctor.id} doctor={doctor} />
-                ))}
-              </div>
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+              {results.map((doctor) => (
+                <div key={doctor.id} className="col">
+                  <Card doctor={doctor} />
+                </div>
+              ))}
             </div>
           )}
           {!results.length && !isLoading && !error && (

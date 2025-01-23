@@ -5,7 +5,7 @@ export default function Card({ doctor }) {
   return (
     <>
       <Link
-        to={`doctors/${doctor.id}`}
+        to={`/doctors/${doctor.id}`}
         className="card border-0 main-card p-3 card-background text-decoration-none"
       >
         <div className="card-body">
@@ -28,9 +28,9 @@ export default function Card({ doctor }) {
               />
             ))}
           </div>
-          <div className="d-flex justify-content-center ">
-            <div className="btn-contact-container ">
-              <a href="#" className=" btn contact-btn">
+          <div className="d-flex justify-content-center">
+            <div className="btn-contact-container">
+              <a href="#" className="btn contact-btn">
                 Contatta lo specialista
               </a>
             </div>
