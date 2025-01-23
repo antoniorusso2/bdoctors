@@ -17,10 +17,9 @@ export default function CreateReviewForm({ doctorId }) {
 
     console.log(data);
     try {
-      const res = await api.post("/reviews", {
+      const res = await api.post(`/doctors/reviews/${doctorId}`, {
         ...data,
-        rating: parseInt(rating),
-        doctorId,
+        rating: parseInt(data.rating),
       });
       console.log(res);
     } catch (err) {

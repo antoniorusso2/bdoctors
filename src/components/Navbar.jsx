@@ -1,13 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useFilter } from "../context/FilterProvider";
+import SearchDoctorInput from "./ui/SearchDoctorInput";
 
 const Navbar = () => {
+  const { setFilters } = useFilter();
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const doctor = formData.get("doctor");
+
+    setFilters((p) => ({ ...p, doctor }));
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div className="container">
         <Link className="navbar-brand" to="/">
           <img
-            src="bdoctors-logo.png"
+            src="/bdoctors-logo.png"
             alt="Bdoctors Logo"
             className="d-inline-block align-text-top me-2
             img-fluid"
@@ -38,16 +51,9 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Cerca specializzazione"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-primary" type="submit">
-              Cerca
-            </button>
+          <form className="d-flex" onSubmit={handleSearch}>
+            <SearchDoctorInput className="me-2" />
+            <button className="btn btn-outline-primary">Cerca</button>
           </form>
         </div>
       </div>

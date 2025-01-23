@@ -20,13 +20,12 @@ export default function CreateDoctorForm() {
   async function onSubmit(data) {
     if (isSubmitting) return;
 
-    console.log(data);
     try {
       const res = await api.post("/doctors", {
         ...data,
-        specializations: data.specializations.map((s) => s.id),
+        specializationsIds: data.specializations.map(({ value }) => value),
       });
-      console.log(res);
+
       navigate(`/doctors/${res.data}`);
     } catch (err) {
       console.error(err);
@@ -116,9 +115,13 @@ export default function CreateDoctorForm() {
             {...register("phone", {
               required: "Phone number is required",
               pattern: {
-                value: /^\+?\d{10,}$/,
+                value: /^\+?\d{10,15}$/,
                 message:
                   "Phone number must contain only digits and optionally start with '+'",
+              },
+              maxLength: {
+                value: 15,
+                message: "Phone number must not exceed 15 characters",
               },
             })}
           />
