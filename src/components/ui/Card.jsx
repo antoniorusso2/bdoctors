@@ -8,12 +8,12 @@ export default function Card({ doctor }) {
     <>
       <Link to={`doctors/${doctor.id}`} className="card border-0 main-card p-3">
         <div className="card-body card-body-background">
-          <p className="card-title">
+          <p className="title purple">
             {doctor.first_name}
             <span> </span>
             {doctor.last_name}
           </p>
-          <p className="mb-3">Specialista in {doctor.specializations}</p>
+          <p className="purple mb-3">Specialista in {doctor.specializations}</p>
 
           <div
             className="mb-4

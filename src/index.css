@@ -110,6 +110,15 @@ main {
   text-decoration: none;
 }
 
+.title {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.purple {
+  color: rgb(94, 33, 150);
+}
+
 .star {
   height: 1rem;
 }
