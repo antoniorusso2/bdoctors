@@ -6,7 +6,11 @@ import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
 
+import useParallaxEffect from "../../ui/Parallax";
+
 export default function HomePage() {
+  useParallaxEffect();
+
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
 
@@ -22,7 +26,7 @@ export default function HomePage() {
       })
       .then((res) => {
         console.log(res);
-        setDoctorsList(res.data);
+        setDoctorsList(res.data.doctors);
       })
       .catch((err) => {
         console.error(err);
@@ -32,15 +36,17 @@ export default function HomePage() {
 
   return (
     <>
-      <section className=" d-flex flex-column justify-content-center hero-title mb-4 ">
-        <div className=" container d-flex  flex-column align-items-center mb-4 justify-content-between p-4">
+      <div className="parallax-bg"></div>
+
+      <section className="d-flex flex-column justify-content-center hero-title mb-4 ">
+        <div className="container-fluid d-flex flex-column align-items-center mb-4 justify-content-between p-4">
           <h1 className="mb-4 text-center ">
             I migliori medici specialisti<br></br>vicino a te
           </h1>
           <div className="search-link-container">
-            <a className="search-link" href="#">
+            <Link to="/doctors/search" className="search-link">
               Ricerca avanzata
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -55,7 +61,7 @@ export default function HomePage() {
           }
         />
       </section>
-      <section className="container">
+      <section className="custom-container">
         {isLoading ? (
           <div className="d-flex justify-content-center">
             <LoaderCircle className="loader" size={60} />
@@ -63,7 +69,7 @@ export default function HomePage() {
         ) : (
           <div className="row g-4 align-itmes-center">
             {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-6">
+              <div key={doctor.id} className="col-4 mb-3">
                 <Card doctor={doctor} />
               </div>
             ))}
