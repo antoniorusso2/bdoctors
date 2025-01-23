@@ -20,7 +20,7 @@ export default function Card({ doctor }) {
           "
           >
             {voteStars.map((n, i) => {
-              return n <= doctor.avg_vote ? (
+              return n <= doctor.rating ? (
                 <StarSolid key={i} className="starAvg text-warning"></StarSolid>
               ) : (
                 <StarIcon key={i} className="starAvg text-warning"></StarIcon>
