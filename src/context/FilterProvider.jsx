@@ -5,7 +5,7 @@ const FilterContext = createContext(null);
 const defaultFilters = {
   doctor: "",
   specializations: [],
-  minRating: "",
+  min_rating: "",
 };
 
 export default function FilterProvider({ children }) {
