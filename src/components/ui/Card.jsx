@@ -13,7 +13,7 @@ export default function Card({ doctor }) {
             <span> </span>
             {doctor.last_name}
           </p>
-          <p className="mb-3">Specialista in {doctor.specialization}</p>
+          <p className="mb-3">Specialista in {doctor.specializations}</p>
 
           <div
             className="mb-4
