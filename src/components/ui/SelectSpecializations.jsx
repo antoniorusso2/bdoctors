@@ -26,16 +26,19 @@ export default function SelectSpecializations({ ...props }) {
 
   return (
     <Select
-      {...props}
-      defaultValue={filters.specializations}
       options={specializations}
       isLoading={isLoading}
       closeMenuOnSelect={false}
       placeholder="Select specializations"
+      value={filters.specializations}
       onChange={(specializations) =>
-        setFilters({ ...filters, specializations: specializations.map(s => s.value) })
+        setFilters({
+          ...filters,
+          specializations,
+        })
       }
       isMulti
+      {...props}
     />
   );
 }

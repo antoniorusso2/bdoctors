@@ -42,6 +42,28 @@ export default function CreateDoctorForm() {
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
+          <label htmlFor="specializations" className="form-label">
+            Specializations
+          </label>
+          <Controller
+            name="specializations"
+            control={control}
+            rules={{ required: "Please select at least one specialization" }}
+            render={({ field }) => (
+              <SelectSpecializations
+                {...field}
+                className={errors.specializations ? "is-invalid" : ""}
+              />
+            )}
+          />
+          {errors.specializations && (
+            <div className="invalid-feedback">
+              {errors.specializations.message}
+            </div>
+          )}
+        </div>
+
+        <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email
           </label>
@@ -148,28 +170,6 @@ export default function CreateDoctorForm() {
           />
           {errors.address && (
             <div className="invalid-feedback">{errors.address.message}</div>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="specializations" className="form-label">
-            Specializations
-          </label>
-          <Controller
-            name="specializations"
-            control={control}
-            rules={{ required: "Please select at least one specialization" }}
-            render={({ field }) => (
-              <SelectSpecializations
-                {...field}
-                className={errors.specializations ? "is-invalid" : ""}
-              />
-            )}
-          />
-          {errors.specializations && (
-            <div className="invalid-feedback">
-              {errors.specializations.message}
-            </div>
           )}
         </div>
 

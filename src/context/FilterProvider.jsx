@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const FilterContext = createContext(null);
 
-const defaultFilters = {
+export const defaultFilters = {
   doctor: "",
   specializations: [],
   min_rating: "",
