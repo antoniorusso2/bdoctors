@@ -5,6 +5,7 @@ import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
+import { Link } from "react-router-dom";
 
 import useParallaxEffect from "../../ui/Parallax";
 import { Link } from "react-router-dom";
