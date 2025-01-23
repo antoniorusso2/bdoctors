@@ -16,14 +16,12 @@ export default function Card({ doctor }) {
           </p>
           <p className="purple mb-3">Specialista in {doctor.specializations}</p>
 
-          <div
-            className="mb-4"
-            >
+          <div className="mb-4">
             {Array.from({ length: 5 }, (_, i) => (
               <Star
                 key={i}
                 className="starAvg text-warning"
-                fill={_ + 1 <= doctor.avg_vote ? "currentColor" : "transparent"}
+                fill={_ + 1 <= doctor.rating ? "currentColor" : "transparent"}
               />
             ))}
           </div>
