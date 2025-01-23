@@ -14,12 +14,11 @@ export default function Card({ doctor }) {
             <span> </span>
             {doctor.last_name}
           </p>
-          <p className="mb-3">Specialista in {doctor.specialization}</p>
+          <p className="purple mb-3">Specialista in {doctor.specializations}</p>
 
           <div
-            className="mb-4
-          "
-          >
+            className="mb-4"
+            >
             {Array.from({ length: 5 }, (_, i) => (
               <Star
                 key={i}
@@ -30,9 +29,9 @@ export default function Card({ doctor }) {
           </div>
           <div className="d-flex justify-content-center">
             <div className="btn-contact-container">
-              <a href="#" className="btn contact-btn">
+              <button className="btn contact-btn">
                 Contatta lo specialista
-              </a>
+              </button>
             </div>
           </div>
         </div>

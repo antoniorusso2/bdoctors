@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
-import { useFilter } from "../../../context/FilterProvider";
+import { defaultFilters, useFilter } from "../../../context/FilterProvider";
 import SearchDoctorInput from "../../ui/SearchDoctorInput";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import SubmitButton from "../../ui/SubmitButton";
@@ -14,20 +14,12 @@ export default function SearchDoctorsPage() {
 
   const { filters, setFilters } = useFilter();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (
-      !filters.specializations.length &&
-      !filters.doctor &&
-      !filters.min_rating
-    )
-      return;
+  const handleSetResults = async (params) => {
     setIsLoading(true);
     setError(null);
-
     try {
       const response = await api.get("/doctors/search", {
-        params: filters,
+        params,
       });
       setResults(response.data);
     } catch (err) {
@@ -36,6 +28,18 @@ export default function SearchDoctorsPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (
+      !filters.specializations.length &&
+      !filters.doctor &&
+      !filters.min_rating
+    )
+      return;
+
+    handleSetResults(filters);
   }
 
   console.log(filters);
@@ -90,10 +94,24 @@ export default function SearchDoctorsPage() {
                 </label>
                 <SelectSpecializations id="specializations" />
               </div>
-              <div className="px-3">
-                <SubmitButton pending={isLoading} className="w-100">
-                  Cerca
-                </SubmitButton>
+              <div className="row g-3 px-3">
+                <div className="col-6 col-xl-12">
+                  <button
+                    type="button"
+                    className="btn bg-danger text-white w-100"
+                    onClick={() => {
+                      setFilters(defaultFilters);
+                      handleSetResults(defaultFilters);
+                    }}
+                  >
+                    Resetta filtri
+                  </button>
+                </div>
+                <div className="col-6 col-xl-12">
+                  <SubmitButton pending={isLoading} className="w-100">
+                    Cerca
+                  </SubmitButton>
+                </div>
               </div>
             </form>
           </div>

@@ -5,9 +5,8 @@ import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
-
-import useParallaxEffect from "../../ui/Parallax";
 import { Link } from "react-router-dom";
+import useParallaxEffect from "../../ui/Parallax";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -17,7 +16,6 @@ export default function HomePage() {
 
   const {
     filters: { specializations, doctor },
-    setFilters,
   } = useFilter();
 
   useEffect(() => {
@@ -53,12 +51,6 @@ export default function HomePage() {
         <SelectSpecializations
           placeholder="Tutte le specializzazioni"
           className="select specializations mb-5 p-4"
-          onChange={(values) =>
-            setFilters((p) => ({
-              ...p,
-              specializations: values.map(({ value }) => value),
-            }))
-          }
         />
       </section>
       <section>
