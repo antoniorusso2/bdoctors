@@ -1,7 +1,7 @@
 #root {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
 }
 
 .parallax-bg {
@@ -92,14 +92,14 @@ main {
   }
 }
 
-.card-body-background {
+.card-background {
   background: rgb(88, 30, 129);
   background: linear-gradient(
     180deg,
     rgba(191, 23, 242, 0.228) 0%,
     rgba(0, 0, 0, 0) 100%
   );
-  border-radius: 1rem;
+  border-radius: 1rem !important;
 }
 
 .starAvg {

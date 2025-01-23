@@ -33,7 +33,7 @@ export default function SelectSpecializations({ ...props }) {
       closeMenuOnSelect={false}
       placeholder="Select specializations"
       onChange={(specializations) =>
-        setFilters({ ...filters, specializations })
+        setFilters({ ...filters, specializations: specializations.map(s => s.value) })
       }
       isMulti
     />

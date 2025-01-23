@@ -8,6 +8,7 @@ import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
 
 import useParallaxEffect from "../../ui/Parallax";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -40,7 +41,7 @@ export default function HomePage() {
 
       <section className="d-flex flex-column justify-content-center hero-title mb-4 ">
         <div className="container-fluid d-flex flex-column align-items-center mb-4 justify-content-between p-4">
-          <h1 className="mb-4 text-center ">
+          <h1 className="mb-4 text-center">
             I migliori medici specialisti<br></br>vicino a te
           </h1>
           <div className="search-link-container">
@@ -61,7 +62,7 @@ export default function HomePage() {
           }
         />
       </section>
-      <section className="custom-container">
+      <section>
         {isLoading ? (
           <div className="d-flex justify-content-center">
             <LoaderCircle className="loader" size={60} />
@@ -69,7 +70,7 @@ export default function HomePage() {
         ) : (
           <div className="row g-4 align-itmes-center">
             {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-4 mb-3">
+              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
                 <Card doctor={doctor} />
               </div>
             ))}

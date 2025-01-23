@@ -1,14 +1,15 @@
+import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
-import { StarIcon } from "@heroicons/react/24/outline";
-import { StarIcon as StarSolid } from "@heroicons/react/24/solid";
 
 export default function Card({ doctor }) {
-  const voteStars = [1, 2, 3, 4, 5];
   return (
     <>
-      <Link to={`doctors/${doctor.id}`} className="card border-0 main-card p-3">
-        <div className="card-body card-body-background">
-          <p className="title purple">
+      <Link
+        to={`doctors/${doctor.id}`}
+        className="card border-0 main-card p-3 card-background text-decoration-none"
+      >
+        <div className="card-body">
+          <p className="card-title">
             {doctor.first_name}
             <span> </span>
             {doctor.last_name}
@@ -16,16 +17,15 @@ export default function Card({ doctor }) {
           <p className="purple mb-3">Specialista in {doctor.specializations}</p>
 
           <div
-            className="mb-4
-          "
-          >
-            {voteStars.map((n, i) => {
-              return n <= doctor.rating ? (
-                <StarSolid key={i} className="starAvg text-warning"></StarSolid>
-              ) : (
-                <StarIcon key={i} className="starAvg text-warning"></StarIcon>
-              );
-            })}
+            className="mb-4"
+            >
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star
+                key={i}
+                className="starAvg text-warning"
+                fill={_ + 1 <= doctor.avg_vote ? "currentColor" : "transparent"}
+              />
+            ))}
           </div>
           <div className="d-flex justify-content-center ">
             <div className="btn-contact-container ">
