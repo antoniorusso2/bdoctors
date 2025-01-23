@@ -6,9 +6,7 @@ import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
-
 import useParallaxEffect from "../../ui/Parallax";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -18,7 +16,6 @@ export default function HomePage() {
 
   const {
     filters: { specializations, doctor },
-    setFilters,
   } = useFilter();
 
   useEffect(() => {
@@ -39,7 +36,7 @@ export default function HomePage() {
     <>
       <div className="parallax-bg"></div>
 
-      <section className="d-flex flex-column justify-content-center hero-title mb-4 ">
+      <section className="d-flex flex-column justify-content-center hero-title mb-4">
         <div className="container-fluid d-flex flex-column align-items-center mb-4 justify-content-between p-4">
           <h1 className="mb-4 text-center">
             I migliori medici specialisti<br></br>vicino a te
@@ -54,12 +51,6 @@ export default function HomePage() {
         <SelectSpecializations
           placeholder="Tutte le specializzazioni"
           className="select specializations mb-5 p-4"
-          onChange={(values) =>
-            setFilters((p) => ({
-              ...p,
-              specializations: values.map(({ value }) => value),
-            }))
-          }
         />
       </section>
       <section>

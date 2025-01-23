@@ -6,15 +6,6 @@ import SearchDoctorInput from "./ui/SearchDoctorInput";
 const Navbar = () => {
   const { setFilters } = useFilter();
 
-  function handleSearch(e) {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const doctor = formData.get("doctor");
-
-    setFilters((p) => ({ ...p, doctor }));
-  }
-
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div className="container">
@@ -51,10 +42,10 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex" onSubmit={handleSearch}>
+          <div className="d-flex">
             <SearchDoctorInput className="me-2" />
             <button className="btn btn-outline-primary">Cerca</button>
-          </form>
+          </div>
         </div>
       </div>
     </nav>
