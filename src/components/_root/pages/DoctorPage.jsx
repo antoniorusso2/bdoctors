@@ -38,6 +38,8 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
 
+  console.log(doctor);
+
   return (
     <>
       <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
@@ -52,7 +54,14 @@ export default function DoctorPage() {
         {showForm ? "Nascondi Form" : "Mostra Form"}
       </button>
 
-      {showForm && <CreateReviewForm doctorId={id} />}
+      {showForm && (
+        <CreateReviewForm
+          doctorId={id}
+          onReviewCreate={(review) =>
+            setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+          }
+        />
+      )}
     </>
   );
 }
