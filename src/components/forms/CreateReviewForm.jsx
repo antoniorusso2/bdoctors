@@ -10,6 +10,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
     handleSubmit,
     setError,
     formState: { isSubmitting, isSubmitSuccessful, errors },
+    reset,
   } = useForm();
 
   async function onSubmit(data) {
@@ -27,6 +28,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
         ...data,
         createdAt: new Date().toISOString(),
       });
+      reset();
     } catch (err) {
       console.error(err);
       setError("root", {

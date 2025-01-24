@@ -9,7 +9,7 @@ import { LoaderCircle } from "lucide-react";
 export default function DoctorPage() {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -24,41 +24,30 @@ export default function DoctorPage() {
       }
     };
 
-
-    // Funzione per recuperare le recensioni
-    const fetchReviews = async () => {
-      try {
-        console.log("Fetching reviews for doctor with ID:", id);
-        const response = await api.get(`/doctors/${id}/reviews`);
-        console.log("Reviews fetched successfully:", response.data);
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
-
-    fetchDoctor(); 
-    fetchReviews();
+    fetchDoctor();
   }, [id]);
 
   // Funzione per calcolare la media voti
   const calculateAverageRating = () => {
-    if (reviews.length === 0) return 0;
-  const total = reviews.reduce((sum, review) => sum + parseFloat(review.rating), 0);
-    return (total / reviews.length).toFixed(1); 
+    if (doctor.reviews.length === 0) return 0;
+    const total = doctor.reviews.reduce(
+      (sum, review) => sum + parseFloat(review.rating),
+      0
+    );
+    return (total / doctor.reviews.length).toFixed(1);
   };
 
   // Funzione per generare le stelle
   const renderStars = (rating) => {
-     const fullStars = Math.floor(rating); 
-     const emptyStars = 5 - fullStars; 
-     return (
+    const fullStars = Math.floor(rating);
+    const emptyStars = 5 - fullStars;
+    return (
       <>
         {[...Array(fullStars)].map((_, index) => (
-          <Star key={`full-${index}`} fill="gold" color="gold" size={20} /> // Stelle piene
+          <Star key={`full-${index}`} fill="gold" color="gold" size={20} />
         ))}
         {[...Array(emptyStars)].map((_, index) => (
-          <Star key={`empty-${index}`} color="#ccc" size={20} /> // Stelle vuote
+          <Star key={`empty-${index}`} color="#ccc" size={20} />
         ))}
       </>
     );
@@ -76,25 +65,23 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
 
-  console.log(doctor);
-
   return (
-      <section>
+    <section>
+      <h2 className="mb-2">{`${doctor.first_name} ${doctor.last_name}`}</h2>
+      <p>Email: {doctor.email}</p>
+      <p>Telefono: {doctor.phone}</p>
+      <p>Indirizzo: {doctor.address}</p>
+      <p>Specializzazioni: {doctor.specializations}</p>
 
-          <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
-          <p>Email: {doctor.email}</p>
-          <p>Telefono: {doctor.phone}</p>
-          <p>Indirizzo: {doctor.address}</p>
+      <button
+        className="btn btn-primary my-3"
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? "Nascondi Form" : "Mostra Form"}
+      </button>
 
-        <button
-          className="btn btn-primary my-3"
-          onClick={() => setShowForm(!showForm)}
-        >
-          {showForm ? "Nascondi Form" : "Mostra Form"}
-        </button>
-
-          {showForm && (
-          <CreateReviewForm
+      {showForm && (
+        <CreateReviewForm
           doctorId={id}
           onReviewCreate={(review) =>
             setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
@@ -102,35 +89,37 @@ export default function DoctorPage() {
         />
       )}
 
-          {/* Media dei voti */}
-            <div className="mt-4">
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                {renderStars(calculateAverageRating())}
-                <span>{calculateAverageRating()}/5</span>
-              </div>
-            </div>
+      {/* Media dei voti */}
+      <div className="mt-4">
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {renderStars(calculateAverageRating())}
+          <span>{calculateAverageRating()}/5</span>
+        </div>
+      </div>
 
-         {/* Sezione recensioni */}
-          <div className="mt-5">
-            <h3>Recensioni:</h3>
-            {doctor.reviews.length === 0 ? (
-              <p>Nessuna recensione disponibile.</p>
-            ) : (
-              <ul className="list-group">
-                {doctor.reviews.map((review) => (
-                  <li className="list-group-item" key={review.id}>
-                    <strong>{`${review.first_name} ${review.last_name}`}</strong>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        {/* Stelle accanto al rating */}                      
-                        {renderStars(review.rating)} 
-                        <span>{review.rating}/5</span>
-                    </div>
-                    <p>{review.review_text}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-      </section>
+      {/* Sezione recensioni */}
+      <div className="mt-5">
+        <h3>Recensioni:</h3>
+        {doctor.reviews.length === 0 ? (
+          <p>Nessuna recensione disponibile.</p>
+        ) : (
+          <ul className="list-group">
+            {doctor.reviews.map((review) => (
+              <li className="list-group-item" key={review.id}>
+                <strong>{`${review.first_name} ${review.last_name}`}</strong>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
+                  {/* Stelle accanto al rating */}
+                  {renderStars(review.rating)}
+                  <span>{review.rating}/5</span>
+                </div>
+                <p>{review.review_text}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
   );
 }
