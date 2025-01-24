@@ -9,7 +9,6 @@ import { LoaderCircle } from "lucide-react";
 export default function DoctorPage() {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
-  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true); 
   const [showForm, setShowForm] = useState(false);
 
@@ -80,7 +79,6 @@ export default function DoctorPage() {
   console.log(doctor);
 
   return (
-    <>
       <section>
 
           <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
@@ -95,7 +93,14 @@ export default function DoctorPage() {
           {showForm ? "Nascondi Form" : "Mostra Form"}
         </button>
 
-          {showForm && <CreateReviewForm doctorId={id} />}
+          {showForm && (
+          <CreateReviewForm
+          doctorId={id}
+          onReviewCreate={(review) =>
+            setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+          }
+        />
+      )}
 
           {/* Media dei voti */}
             <div className="mt-4">
@@ -108,11 +113,11 @@ export default function DoctorPage() {
          {/* Sezione recensioni */}
           <div className="mt-5">
             <h3>Recensioni:</h3>
-            {reviews.length === 0 ? (
+            {doctor.reviews.length === 0 ? (
               <p>Nessuna recensione disponibile.</p>
             ) : (
               <ul className="list-group">
-                {reviews.map((review) => (
+                {doctor.reviews.map((review) => (
                   <li className="list-group-item" key={review.id}>
                     <strong>{`${review.first_name} ${review.last_name}`}</strong>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -127,14 +132,5 @@ export default function DoctorPage() {
             )}
           </div>
       </section>
-      {showForm && (
-        <CreateReviewForm
-          doctorId={id}
-          onReviewCreate={(review) =>
-            setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
-          }
-        />
-      )}
-    </>
   );
 }
