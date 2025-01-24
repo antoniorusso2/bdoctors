@@ -77,6 +77,8 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
 
+  console.log(doctor);
+
   return (
     <>
       <section>
@@ -125,6 +127,14 @@ export default function DoctorPage() {
             )}
           </div>
       </section>
+      {showForm && (
+        <CreateReviewForm
+          doctorId={id}
+          onReviewCreate={(review) =>
+            setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+          }
+        />
+      )}
     </>
   );
 }
