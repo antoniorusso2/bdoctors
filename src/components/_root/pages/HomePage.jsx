@@ -5,7 +5,7 @@ import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
-import { Link } from "react-router-dom";
+
 import useParallaxEffect from "../../ui/Parallax";
 import FormAlert from "../../../components/ui/FormAlert";
 
@@ -30,6 +30,7 @@ export default function HomePage() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setDoctorsList(res.data);
       })
       .catch((err) => {

@@ -8,6 +8,7 @@ export default function DoctorPage() {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true); 
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     // Funzione per recuperare i dati del medico
@@ -37,13 +38,20 @@ export default function DoctorPage() {
 
   return (
     <>
-      <section>
+      <section  className="container mt-5">
         <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
         <p>Email: {doctor.email}</p>
         <p>Telefono: {doctor.phone}</p>
         <p>Indirizzo: {doctor.address}</p>
-       
-        <CreateReviewForm doctorId={id} />
+
+        <button
+          className="btn btn-primary my-3"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? "Nascondi Form" : "Mostra Form"}
+        </button>
+
+        {showForm && <CreateReviewForm doctorId={id} />}
       </section>
     </>
   );
