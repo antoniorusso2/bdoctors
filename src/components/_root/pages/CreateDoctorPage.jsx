@@ -3,7 +3,7 @@ import CreateDoctorForm from "../../forms/CreateDoctorForm";
 export default function CreateDoctorPage() {
   return (
     <>
-      <h2 className="mb-4">Add New Doctor</h2>
+      <h2 className="mb-4">Registrati come medico</h2>
       <CreateDoctorForm />
     </>
   );
