@@ -8,6 +8,7 @@ import { useFilter } from "../../../context/FilterProvider";
 
 import useParallaxEffect from "../../ui/Parallax";
 import FormAlert from "../../../components/ui/FormAlert";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useParallaxEffect();
