@@ -12,7 +12,7 @@ export default function SelectSpecializations({ ...props }) {
   useEffect(() => {
     const fetchSpecializations = async () => {
       try {
-        const { data } = await api.get("/doctors/specializations");
+        const { data } = await api.get("/specializations");
         setSpecializations(data);
       } catch (err) {
         console.error(err);

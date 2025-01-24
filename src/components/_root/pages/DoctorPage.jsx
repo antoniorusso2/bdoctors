@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
 import { Star } from "lucide-react";
 import CreateReviewForm from "../../forms/CreateReviewForm";
-
+import FormAlert from "../../ui/FormAlert";
+import { LoaderCircle } from "lucide-react";
 
 export default function DoctorPage() {
   const { id } = useParams();
@@ -13,15 +14,14 @@ export default function DoctorPage() {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    // Funzione per recuperare i dati del medico
     const fetchDoctor = async () => {
       try {
-        const response = await api.get(`/doctors/${id}`); 
-        setDoctor(response.data); 
+        const response = await api.get(`/doctors/${id}`);
+        setDoctor(response.data);
       } catch (error) {
-        console.error("Error fetching doctor data:", error); 
+        console.error("Error fetching doctor data:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -66,22 +66,25 @@ export default function DoctorPage() {
   };
 
   if (loading) {
-    return <p>Caricamento in corso...</p>;
+    return (
+      <div className="d-flex justify-content-center">
+        <LoaderCircle className="loader" size={60} />
+      </div>
+    );
   }
 
-  
   if (!doctor) {
-    return <p>Medico non trovato.</p>;
+    return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
-
 
   return (
     <>
-      <section  className="container mt-5">
-        <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
-        <p>Email: {doctor.email}</p>
-        <p>Telefono: {doctor.phone}</p>
-        <p>Indirizzo: {doctor.address}</p>
+      <section>
+
+          <h2>{`${doctor.first_name} ${doctor.last_name}`}</h2>
+          <p>Email: {doctor.email}</p>
+          <p>Telefono: {doctor.phone}</p>
+          <p>Indirizzo: {doctor.address}</p>
 
         <button
           className="btn btn-primary my-3"
@@ -90,15 +93,15 @@ export default function DoctorPage() {
           {showForm ? "Nascondi Form" : "Mostra Form"}
         </button>
 
-        {showForm && <CreateReviewForm doctorId={id} />}
+          {showForm && <CreateReviewForm doctorId={id} />}
 
-        {/* Media dei voti */}
-          <div className="mt-4">
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              {renderStars(calculateAverageRating())}
-              <span>{calculateAverageRating()}/5</span>
+          {/* Media dei voti */}
+            <div className="mt-4">
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                {renderStars(calculateAverageRating())}
+                <span>{calculateAverageRating()}/5</span>
+              </div>
             </div>
-          </div>
 
          {/* Sezione recensioni */}
           <div className="mt-5">
