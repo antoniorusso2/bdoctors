@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { Controller } from "react-hook-form";
 
-function AddressAutocomplete({ control }) {
+function AddressAutocomplete({ control, defaultAddress }) {
+  const [address, setAddress] = useState(defaultAddress);
   const autocompleteRef = useRef(null);
 
   return (
@@ -14,15 +15,17 @@ function AddressAutocomplete({ control }) {
         minLength: { value: 5, message: "Address must be least 5 characters" },
       }}
       render={({
-        field: { onChange, ...restField },
+        field: { onChange, value, ...restField },
         fieldState: { error },
       }) => (
         <Autocomplete
           onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
           onPlaceChanged={() => {
-            const place = autocompleteRef.current.getPlace();
-            if (place && place.formatted_address)
-              onChange(place.formatted_address);
+            const { formatted_address } = autocompleteRef.current.getPlace();
+            if (formatted_address) {
+              setAddress(formatted_address);
+              onChange(formatted_address);
+            }
           }}
           restrictions={{ country: "it" }}
           className={`${error ? "is-invalid" : ""}`}
@@ -33,6 +36,8 @@ function AddressAutocomplete({ control }) {
             placeholder="Inserisci il tuo indirizzo"
             className={`form-control ${error ? "is-invalid" : ""}`}
             {...restField}
+            value={address}
+            onChange={(e) => setAddress(e.target.value.trim())}
           />
         </Autocomplete>
       )}

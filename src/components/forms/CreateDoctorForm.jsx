@@ -16,10 +16,8 @@ export default function CreateDoctorForm() {
     handleSubmit,
     setError,
     formState: { isSubmitting, isSubmitSuccessful, errors },
-    watch,
+    getValues,
   } = useForm();
-
-  console.log(watch());
 
   async function onSubmit(data) {
     if (isSubmitting) return;
@@ -160,13 +158,16 @@ export default function CreateDoctorForm() {
           <label htmlFor="address" className="form-label">
             Address
           </label>
-          <AddressAutocomplete control={control} />
+          <AddressAutocomplete
+            control={control}
+            defaultAddress={getValues("address") || ""}
+          />
           {errors.address && (
             <div className="invalid-feedback">{errors.address.message}</div>
           )}
         </div>
 
-        <SubmitButton pending={isSubmitting}>Add Doctor</SubmitButton>
+        <SubmitButton pending={isSubmitting}>Crea dottore</SubmitButton>
       </form>
     </>
   );

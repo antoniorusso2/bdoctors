@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
-import { Star } from "lucide-react";
+import { Star, LoaderCircle } from "lucide-react";
 import CreateReviewForm from "../../forms/CreateReviewForm";
 import GoogleMap from "../../ui/Map";
 import FormAlert from "../../ui/FormAlert";
-import { LoaderCircle } from "lucide-react";
 
 export default function DoctorPage() {
   const { id } = useParams();
@@ -24,6 +23,8 @@ export default function DoctorPage() {
         setLoading(false);
       }
     };
+
+    fetchDoctor();
   }, [id]);
 
   // Funzione per calcolare la media voti
@@ -81,7 +82,7 @@ export default function DoctorPage() {
               className="btn btn-primary my-3"
               onClick={() => setShowForm(!showForm)}
             >
-              {showForm ? "Nascondi Form" : "Mostra Form"}
+              {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
             </button>
           </div>
 
@@ -92,45 +93,50 @@ export default function DoctorPage() {
       </section>
       <section className="form-section">
         {showForm && (
-        <CreateReviewForm
-          doctorId={id}
-          onReviewCreate={(review) =>
-            setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
-          }
-        />
-      )}
+          <CreateReviewForm
+            doctorId={id}
+            onReviewCreate={(review) =>
+              setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+            }
+          />
+        )}
       </section>
-       {/* Media dei voti */}
+      {/* Media dei voti */}
       <div className="mt-4">
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           {renderStars(calculateAverageRating())}
           <span>{calculateAverageRating()}/5</span>
         </div>
       </div>
-    {/* Sezione recensioni */}
+      {/* Sezione recensioni */}
       <section>
-      <div className="mt-5">
-        <h3>Recensioni:</h3>
-        {doctor.reviews.length === 0 ? (
-          <p>Nessuna recensione disponibile.</p>
-        ) : (
-          <ul className="list-group">
-            {doctor.reviews.map((review) => (
-              <li className="list-group-item" key={review.id}>
-                <strong>{`${review.first_name} ${review.last_name}`}</strong>
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  {/* Stelle accanto al rating */}
-                  {renderStars(review.rating)}
-                  <span>{review.rating}/5</span>
-                </div>
-                <p>{review.review_text}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        <div className="mt-5">
+          <h3>Recensioni:</h3>
+          {doctor.reviews.length === 0 ? (
+            <p>Nessuna recensione disponibile.</p>
+          ) : (
+            <ul className="list-group">
+              {doctor.reviews.map((review) => (
+                <li className="list-group-item" key={review.id}>
+                  <strong>{`${review.first_name} ${review.last_name}`}</strong>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    {/* Stelle accanto al rating */}
+                    {renderStars(review.rating)}
+                    <span>{review.rating}/5</span>
+                  </div>
+                  <p>{review.review_text}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
     </>
+  );
 }

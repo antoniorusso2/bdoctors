@@ -6,10 +6,8 @@ import SelectSpecializations from "../../ui/SelectSpecializations";
 import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
-
 import useParallaxEffect from "../../ui/Parallax";
 import FormAlert from "../../../components/ui/FormAlert";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -20,8 +18,6 @@ export default function HomePage() {
   const {
     filters: { specializations, doctor },
   } = useFilter();
-
-  console.log(specializations);
 
   useEffect(() => {
     api
