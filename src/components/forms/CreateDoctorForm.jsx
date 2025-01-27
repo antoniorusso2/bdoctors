@@ -5,6 +5,7 @@ import { api } from "../../lib/api/index";
 import { useNavigate } from "react-router-dom";
 import FormAlert from "../ui/FormAlert";
 import SelectSpecializations from "../ui/SelectSpecializations";
+import AddressAutocomplete from "../ui/AddressAutocomplete";
 
 export default function CreateDoctorForm() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function CreateDoctorForm() {
   return (
     <>
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form id="create-doctor-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="specializations" className="form-label">
             Specializations
@@ -156,7 +157,7 @@ export default function CreateDoctorForm() {
           <label htmlFor="address" className="form-label">
             Address
           </label>
-          <input
+          {/* <input
             type="text"
             className={`form-control ${errors.address ? "is-invalid" : ""}`}
             id="address"
@@ -167,7 +168,8 @@ export default function CreateDoctorForm() {
                 message: "Address must be at least 5 characters",
               },
             })}
-          />
+          /> */}
+          <AddressAutocomplete register={register} errors={errors} />
           {errors.address && (
             <div className="invalid-feedback">{errors.address.message}</div>
           )}
