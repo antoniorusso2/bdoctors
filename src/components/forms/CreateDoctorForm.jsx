@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, FormProvider } from "react-hook-form";
 import SubmitButton from "../ui/SubmitButton";
 import { api } from "../../lib/api/index";
 import { useNavigate } from "react-router-dom";
@@ -11,12 +11,15 @@ export default function CreateDoctorForm() {
   const navigate = useNavigate();
 
   const {
+    control,
     register,
     handleSubmit,
-    control,
     setError,
     formState: { isSubmitting, isSubmitSuccessful, errors },
+    watch,
   } = useForm();
+
+  console.log(watch());
 
   async function onSubmit(data) {
     if (isSubmitting) return;
@@ -157,19 +160,7 @@ export default function CreateDoctorForm() {
           <label htmlFor="address" className="form-label">
             Address
           </label>
-          {/* <input
-            type="text"
-            className={`form-control ${errors.address ? "is-invalid" : ""}`}
-            id="address"
-            {...register("address", {
-              required: "Address is required",
-              minLength: {
-                value: 5,
-                message: "Address must be at least 5 characters",
-              },
-            })}
-          /> */}
-          <AddressAutocomplete register={register} errors={errors} />
+          <AddressAutocomplete control={control} />
           {errors.address && (
             <div className="invalid-feedback">{errors.address.message}</div>
           )}
