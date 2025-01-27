@@ -18,8 +18,11 @@ export default function SearchDoctorsPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await api.get("/doctors/search", {
-        params,
+      const response = await api.get("/doctors", {
+        params: {
+          ...params,
+          specializations: params.specializations.map((s) => s.value),
+        },
       });
       setResults(response.data);
     } catch (err) {
@@ -42,7 +45,9 @@ export default function SearchDoctorsPage() {
     handleSetResults(filters);
   }
 
-  console.log(filters);
+  useEffect(() => {
+    handleSetResults(filters);
+  }, [filters]);
 
   return (
     <div className="">

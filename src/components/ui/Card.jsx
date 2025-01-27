@@ -21,7 +21,9 @@ export default function Card({ doctor }) {
               <Star
                 key={i}
                 className="starAvg text-warning"
-                fill={_ + 1 <= doctor.rating ? "currentColor" : "transparent"}
+                fill={
+                  i + 1 <= doctor.avg_rating ? "currentColor" : "transparent"
+                }
               />
             ))}
           </div>

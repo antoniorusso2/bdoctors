@@ -4,12 +4,13 @@ import SubmitButton from "../ui/SubmitButton";
 import { api } from "../../lib/api/index";
 import FormAlert from "../ui/FormAlert";
 
-export default function CreateReviewForm({ doctorId }) {
+export default function CreateReviewForm({ doctorId, onReviewCreate }) {
   const {
     register,
     handleSubmit,
     setError,
     formState: { isSubmitting, isSubmitSuccessful, errors },
+    reset,
   } = useForm();
 
   async function onSubmit(data) {
@@ -17,11 +18,17 @@ export default function CreateReviewForm({ doctorId }) {
 
     console.log(data);
     try {
-      const res = await api.post(`/doctors/reviews/${doctorId}`, {
+      const res = await api.post(`/doctors/${doctorId}/review`, {
         ...data,
         rating: parseInt(data.rating),
       });
       console.log(res);
+      onReviewCreate({
+        id: res.data,
+        ...data,
+        createdAt: new Date().toISOString(),
+      });
+      reset();
     } catch (err) {
       console.error(err);
       setError("root", {
@@ -37,14 +44,14 @@ export default function CreateReviewForm({ doctorId }) {
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
+          <label htmlFor="first_name" className="form-label">
             First Name
           </label>
           <input
             type="text"
-            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
-            id="firstName"
-            {...register("firstName", {
+            className={`form-control ${errors.first_name ? "is-invalid" : ""}`}
+            id="first_name"
+            {...register("first_name", {
               required: "First name is required",
               minLength: {
                 value: 2,
@@ -52,20 +59,20 @@ export default function CreateReviewForm({ doctorId }) {
               },
             })}
           />
-          {errors.firstName && (
-            <div className="invalid-feedback">{errors.firstName.message}</div>
+          {errors.first_name && (
+            <div className="invalid-feedback">{errors.first_name.message}</div>
           )}
         </div>
 
         <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
+          <label htmlFor="last_name" className="form-label">
             Last Name
           </label>
           <input
             type="text"
-            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
-            id="lastName"
-            {...register("lastName", {
+            className={`form-control ${errors.last_name ? "is-invalid" : ""}`}
+            id="last_name"
+            {...register("last_name", {
               required: "Last name is required",
               minLength: {
                 value: 2,
@@ -73,8 +80,8 @@ export default function CreateReviewForm({ doctorId }) {
               },
             })}
           />
-          {errors.lastName && (
-            <div className="invalid-feedback">{errors.lastName.message}</div>
+          {errors.last_name && (
+            <div className="invalid-feedback">{errors.last_name.message}</div>
           )}
         </div>
 
@@ -110,14 +117,14 @@ export default function CreateReviewForm({ doctorId }) {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="reviewText" className="form-label">
+          <label htmlFor="review_text" className="form-label">
             Review
           </label>
           <textarea
-            className={`form-control ${errors.reviewText ? "is-invalid" : ""}`}
-            id="reviewText"
+            className={`form-control ${errors.review_text ? "is-invalid" : ""}`}
+            id="review_text"
             rows="4"
-            {...register("reviewText", {
+            {...register("review_text", {
               required: "Review text is required",
               minLength: {
                 value: 10,
@@ -125,8 +132,8 @@ export default function CreateReviewForm({ doctorId }) {
               },
             })}
           ></textarea>
-          {errors.reviewText && (
-            <div className="invalid-feedback">{errors.reviewText.message}</div>
+          {errors.review_text && (
+            <div className="invalid-feedback">{errors.review_text.message}</div>
           )}
         </div>
 

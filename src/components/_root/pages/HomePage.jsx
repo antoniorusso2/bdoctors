@@ -8,6 +8,8 @@ import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
 
 import useParallaxEffect from "../../ui/Parallax";
+import FormAlert from "../../../components/ui/FormAlert";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -19,10 +21,15 @@ export default function HomePage() {
     filters: { specializations, doctor },
   } = useFilter();
 
+  console.log(specializations);
+
   useEffect(() => {
     api
       .get(`/doctors`, {
-        params: { specializations, doctor },
+        params: {
+          specializations: specializations.map((s) => s.value),
+          doctor,
+        },
       })
       .then((res) => {
         console.log(res.data);
@@ -60,7 +67,7 @@ export default function HomePage() {
           <div className="d-flex justify-content-center">
             <LoaderCircle className="loader" size={60} />
           </div>
-        ) : (
+        ) : doctorsList.length ? (
           <div className="row g-4 align-itmes-center">
             {doctorsList.map((doctor) => (
               <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
@@ -68,6 +75,8 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        ) : (
+          <FormAlert error={{ message: "Nessun medico disponibile" }} />
         )}
       </section>
     </>
