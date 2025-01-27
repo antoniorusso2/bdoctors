@@ -137,7 +137,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
           )}
         </div>
 
-        <SubmitButton pending={isSubmitting}>Submit Review</SubmitButton>
+        <SubmitButton pending={isSubmitting}>Invia recensione</SubmitButton>
       </form>
     </>
   );
