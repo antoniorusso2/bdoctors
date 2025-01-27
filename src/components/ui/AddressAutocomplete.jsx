@@ -4,6 +4,7 @@ import { Controller } from "react-hook-form";
 
 function AddressAutocomplete({ control, defaultAddress }) {
   const [address, setAddress] = useState(defaultAddress);
+  const [coordinates, setCoordinates] = useState([]);
   const autocompleteRef = useRef(null);
 
   return (
@@ -21,10 +22,13 @@ function AddressAutocomplete({ control, defaultAddress }) {
         <Autocomplete
           onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
           onPlaceChanged={() => {
-            const { formatted_address } = autocompleteRef.current.getPlace();
+            const { formatted_address, geometry } =
+              autocompleteRef.current.getPlace();
             if (formatted_address) {
               setAddress(formatted_address);
+              setCoordinates(geometry.location.lat(), geometry.location.lng());
               onChange(formatted_address);
+              console.log(geometry.location.lat(), geometry.location.lng());
             }
           }}
           restrictions={{ country: "it" }}
