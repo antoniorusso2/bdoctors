@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../../../lib/api";
 import { Star } from "lucide-react";
 import CreateReviewForm from "../../forms/CreateReviewForm";
+import GoogleMap from "../../ui/Map";
 import FormAlert from "../../ui/FormAlert";
 import { LoaderCircle } from "lucide-react";
 
@@ -23,8 +24,6 @@ export default function DoctorPage() {
         setLoading(false);
       }
     };
-
-    fetchDoctor();
   }, [id]);
 
   // Funzione per calcolare la media voti
@@ -66,21 +65,33 @@ export default function DoctorPage() {
   }
 
   return (
-    <section>
-      <h2 className="mb-2">{`${doctor.first_name} ${doctor.last_name}`}</h2>
-      <p>Email: {doctor.email}</p>
-      <p>Telefono: {doctor.phone}</p>
-      <p>Indirizzo: {doctor.address}</p>
-      <p>Specializzazioni: {doctor.specializations}</p>
+    <>
+      <section className="container mt-5">
+        <div className="row">
+          <div className="col-8 p-4 card-background ">
+            <h3 className="mb-4">
+              Medico specialista in {doctor.specializations}
+            </h3>
+            <h2 className="mb-5">{`${doctor.first_name} ${doctor.last_name}`}</h2>
+            <p>Email: {doctor.email}</p>
+            <p>Telefono: {doctor.phone}</p>
+            <p>Indirizzo: {doctor.address}</p>
 
-      <button
-        className="btn btn-primary my-3"
-        onClick={() => setShowForm(!showForm)}
-      >
-        {showForm ? "Nascondi Form" : "Mostra Form"}
-      </button>
+            <button
+              className="btn btn-primary my-3"
+              onClick={() => setShowForm(!showForm)}
+            >
+              {showForm ? "Nascondi Form" : "Mostra Form"}
+            </button>
+          </div>
 
-      {showForm && (
+          <div className="col-4 map-responsive">
+            <GoogleMap />
+          </div>
+        </div>
+      </section>
+      <section className="form-section">
+        {showForm && (
         <CreateReviewForm
           doctorId={id}
           onReviewCreate={(review) =>
@@ -88,16 +99,16 @@ export default function DoctorPage() {
           }
         />
       )}
-
-      {/* Media dei voti */}
+      </section>
+       {/* Media dei voti */}
       <div className="mt-4">
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           {renderStars(calculateAverageRating())}
           <span>{calculateAverageRating()}/5</span>
         </div>
       </div>
-
-      {/* Sezione recensioni */}
+    {/* Sezione recensioni */}
+      <section>
       <div className="mt-5">
         <h3>Recensioni:</h3>
         {doctor.reviews.length === 0 ? (
@@ -120,6 +131,6 @@ export default function DoctorPage() {
           </ul>
         )}
       </div>
-    </section>
-  );
+      </section>
+    </>
 }
