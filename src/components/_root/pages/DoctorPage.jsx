@@ -65,6 +65,8 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
 
+  const coordinates = doctor.address;
+
   return (
     <>
       <section className="container mt-5">
@@ -87,7 +89,7 @@ export default function DoctorPage() {
           </div>
 
           <div className="col-4 map-responsive">
-            <GoogleMap />
+            <GoogleMap coordinates={coordinates} />
           </div>
         </div>
       </section>

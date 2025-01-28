@@ -1,8 +1,9 @@
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 
-export default function GoogleMap() {
+export default function GoogleMap({ coordinates }) {
   const API_KEY = "AIzaSyDjIKHhyn9C39sPsPKf04y8ZqvAEcStaiI";
 
+  console.log(coordinates);
   return (
     <APIProvider apiKey={API_KEY}>
       <Map
