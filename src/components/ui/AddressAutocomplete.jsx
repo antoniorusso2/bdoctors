@@ -37,7 +37,7 @@ function AddressAutocomplete({ control, defaultAddress }) {
             className={`form-control ${error ? "is-invalid" : ""}`}
             {...restField}
             value={address}
-            onChange={(e) => setAddress(e.target.value.trim())}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </Autocomplete>
       )}
