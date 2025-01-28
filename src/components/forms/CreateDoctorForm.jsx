@@ -42,10 +42,14 @@ export default function CreateDoctorForm() {
   return (
     <>
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
-      <form id="create-doctor-form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="creation-form"
+        id="create-doctor-form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="mb-3">
           <label htmlFor="specializations" className="form-label">
-            Specializations
+            Specializzazioni
           </label>
           <Controller
             name="specializations"
@@ -67,7 +71,7 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Email
+            E-mail
           </label>
           <input
             type="email"
@@ -88,7 +92,7 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="first_name" className="form-label">
-            First Name
+            Nome
           </label>
           <input
             type="text"
@@ -109,7 +113,7 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="last_name" className="form-label">
-            Last Name
+            Cognome
           </label>
           <input
             type="text"
@@ -130,7 +134,7 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
-            Phone
+            Telefono
           </label>
           <input
             type="tel"
@@ -156,7 +160,7 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="address" className="form-label">
-            Address
+            Indirizzo
           </label>
           <AddressAutocomplete
             control={control}
