@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
 import { defaultFilters, useFilter } from "../../../context/FilterProvider";
 import SearchDoctorInput from "../../ui/SearchDoctorInput";
+import AdvancedSearchDoctorInput from "../../ui/AdvancedSearchDoctorInput";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import SubmitButton from "../../ui/SubmitButton";
 import Card from "../../ui/Card";
@@ -13,6 +14,7 @@ export default function SearchDoctorsPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { filters, setFilters } = useFilter();
+  const [advancedFilters, setAdvancedFilters] = useState();
 
   const handleSetResults = async (params) => {
     setIsLoading(true);
@@ -69,6 +71,7 @@ export default function SearchDoctorsPage() {
                   Nome, Cognome o Email
                 </label>
                 <SearchDoctorInput
+                  value={advancedFilters}
                   id="doctor"
                   placeholder="Es. Marco Rossi o marco@example.com"
                 />
@@ -82,7 +85,10 @@ export default function SearchDoctorsPage() {
                   id="minRating"
                   value={filters.min_rating}
                   onChange={(e) =>
-                    setFilters({ ...filters, min_rating: e.target.value })
+                    setAdvancedFilters({
+                      ...advancedFilters,
+                      min_rating: e.target.value,
+                    })
                   }
                 >
                   <option value="">Tutte le valutazioni</option>
@@ -105,7 +111,7 @@ export default function SearchDoctorsPage() {
                     type="button"
                     className="btn bg-danger text-white w-100"
                     onClick={() => {
-                      setFilters(defaultFilters);
+                      setAdvancedFilters(defaultFilters);
                       handleSetResults(defaultFilters);
                     }}
                   >

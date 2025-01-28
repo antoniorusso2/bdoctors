@@ -2,11 +2,12 @@ import { useFilter } from "../../context/FilterProvider";
 
 export default function SearchDoctorInput({ className, ...props }) {
   const { filters, setFilters } = useFilter();
+  const { value } = props;
 
   return (
     <input
       type="text"
-      value={filters.doctor}
+      value={value}
       className={`form-control ${className}`}
       placeholder="Cerca dottore"
       aria-label="Search doctor"
