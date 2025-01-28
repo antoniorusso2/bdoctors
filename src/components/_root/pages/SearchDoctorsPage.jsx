@@ -99,11 +99,11 @@ export default function SearchDoctorsPage() {
                   <option value="1">1 stella o più</option>
                 </select>
               </div>
-              <div className="mb-3 px-3">
+              <div className="mb-3 px-3 ">
                 <label htmlFor="specializations" className="form-label">
                   Specializzazione
                 </label>
-                <SelectSpecializations id="specializations" />
+                <SelectSpecializations id="specializations" className="z-i-1" />
               </div>
               <div className="row g-3 px-3">
                 <div className="col-6 col-xl-12">
@@ -129,7 +129,7 @@ export default function SearchDoctorsPage() {
         </div>
 
         {/* Main content */}
-        <main className="ms-sm-auto col-xl-9 px-md-4">
+        <main className="ms-sm-auto col-xl-9 px-md-4 z-i-m1">
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 className="h2">Ricerca Avanzata Medici</h1>
             <button
