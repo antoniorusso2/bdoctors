@@ -158,7 +158,7 @@ export default function CreateDoctorForm() {
           )}
         </div>
 
-        <div className="mb-3">
+        <div className="mb-5">
           <label htmlFor="address" className="form-label">
             Indirizzo
           </label>
@@ -171,7 +171,7 @@ export default function CreateDoctorForm() {
           )}
         </div>
 
-        <SubmitButton pending={isSubmitting}>Crea dottore</SubmitButton>
+        <SubmitButton pending={isSubmitting}>Crea il tuo profilo</SubmitButton>
       </form>
     </>
   );
