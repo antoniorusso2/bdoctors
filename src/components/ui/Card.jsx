@@ -6,26 +6,30 @@ export default function Card({ doctor }) {
     <>
       <Link
         to={`/doctors/${doctor.id}`}
-        className="card border-0 main-card p-3 card-background text-decoration-none"
+        className="card border-0 main-card p-3 card-background text-decoration-none "
       >
-        <div className="card-body">
-          <p className="card-title">
-            {doctor.first_name}
-            <span> </span>
-            {doctor.last_name}
-          </p>
-          <p className="purple mb-3">Specialista in {doctor.specializations}</p>
+        <div className="card-body d-flex flex-column justify-content-between">
+          <div className="card-conten flex-grow-1">
+            <p className="card-title">
+              {doctor.first_name}
+              <span> </span>
+              {doctor.last_name}
+            </p>
+            <p className="purple mb-3">
+              Specialista in {doctor.specializations}
+            </p>
 
-          <div className="mb-4">
-            {Array.from({ length: 5 }, (_, i) => (
-              <Star
-                key={i}
-                className="starAvg text-warning"
-                fill={
-                  i + 1 <= doctor.avg_rating ? "currentColor" : "transparent"
-                }
-              />
-            ))}
+            <div className="mb-4">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star
+                  key={i}
+                  className="starAvg text-warning"
+                  fill={
+                    i + 1 <= doctor.avg_rating ? "currentColor" : "transparent"
+                  }
+                />
+              ))}
+            </div>
           </div>
           <div className="d-flex justify-content-center">
             <div className="btn-contact-container">

@@ -97,6 +97,10 @@ main {
   }
 }
 
+.main-card {
+  min-height: 18rem;
+}
+
 .card-background {
   background: rgb(88, 30, 129);
   background: linear-gradient(
