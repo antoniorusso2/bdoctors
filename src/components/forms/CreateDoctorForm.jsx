@@ -87,14 +87,14 @@ export default function CreateDoctorForm() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
+          <label htmlFor="first_name" className="form-label">
             First Name
           </label>
           <input
             type="text"
-            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
-            id="firstName"
-            {...register("firstName", {
+            className={`form-control ${errors.first_name ? "is-invalid" : ""}`}
+            id="first_name"
+            {...register("first_name", {
               required: "First name is required",
               minLength: {
                 value: 3,
@@ -102,20 +102,20 @@ export default function CreateDoctorForm() {
               },
             })}
           />
-          {errors.firstName && (
-            <div className="invalid-feedback">{errors.firstName.message}</div>
+          {errors.first_name && (
+            <div className="invalid-feedback">{errors.first_name.message}</div>
           )}
         </div>
 
         <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
+          <label htmlFor="last_name" className="form-label">
             Last Name
           </label>
           <input
             type="text"
-            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
-            id="lastName"
-            {...register("lastName", {
+            className={`form-control ${errors.last_name ? "is-invalid" : ""}`}
+            id="last_name"
+            {...register("last_name", {
               required: "Last name is required",
               minLength: {
                 value: 3,
@@ -123,8 +123,8 @@ export default function CreateDoctorForm() {
               },
             })}
           />
-          {errors.lastName && (
-            <div className="invalid-feedback">{errors.lastName.message}</div>
+          {errors.last_name && (
+            <div className="invalid-feedback">{errors.last_name.message}</div>
           )}
         </div>
 

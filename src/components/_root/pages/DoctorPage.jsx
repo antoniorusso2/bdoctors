@@ -84,13 +84,13 @@ export default function DoctorPage() {
           </div>
         </div>
       </section>
+      <button
+        className="btn btn-primary my-3"
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
+      </button>
       <section className="form-section">
-        <button
-          className="btn btn-primary my-3"
-          onClick={() => setShowForm(!showForm)}
-        >
-          {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
-        </button>
         {showForm && (
           <CreateReviewForm
             doctorId={id}
