@@ -97,6 +97,19 @@ main {
   }
 }
 
+.main-card {
+  min-height: 18rem;
+}
+
+.card-spec {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .card-background {
   background: rgb(88, 30, 129);
   background: linear-gradient(
@@ -179,7 +192,7 @@ main {
   }
 
   .advanced-select-specializations {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: #000;
   }
 }

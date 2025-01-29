@@ -23,7 +23,7 @@ export default function SearchDoctorsPage() {
       const response = await api.get(
         "/doctors",
         params && {
-          params: {
+          params: { 
             ...params,
             specializations: params.specializations.map((s) => s.value),
           },

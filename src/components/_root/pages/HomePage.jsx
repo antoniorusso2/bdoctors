@@ -68,21 +68,6 @@ export default function HomePage() {
                 <Card doctor={doctor} />
               </div>
             ))}
-            {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
-                <Card doctor={doctor} />
-              </div>
-            ))}
-            {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
-                <Card doctor={doctor} />
-              </div>
-            ))}
-            {doctorsList.map((doctor) => (
-              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
-                <Card doctor={doctor} />
-              </div>
-            ))}
           </div>
         ) : (
           <FormAlert error={{ message: "Nessun medico disponibile" }} />

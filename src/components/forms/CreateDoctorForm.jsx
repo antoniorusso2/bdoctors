@@ -42,11 +42,7 @@ export default function CreateDoctorForm() {
   return (
     <>
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
-      <form
-        className="creation-form"
-        id="create-doctor-form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="specializations" className="form-label">
             Specializzazioni
@@ -54,7 +50,7 @@ export default function CreateDoctorForm() {
           <Controller
             name="specializations"
             control={control}
-            rules={{ required: "Please select at least one specialization" }}
+            rules={{ required: "Seleziona almeno una specializzazione" }}
             render={({ field }) => (
               <SelectSpecializations
                 {...field}
@@ -78,10 +74,10 @@ export default function CreateDoctorForm() {
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
             id="email"
             {...register("email", {
-              required: "Email is required",
+              required: "L'email e' obbligatoria",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "The entered email is not valid",
+                message: "Email non invalida",
               },
             })}
           />
@@ -99,10 +95,10 @@ export default function CreateDoctorForm() {
             className={`form-control ${errors.first_name ? "is-invalid" : ""}`}
             id="first_name"
             {...register("first_name", {
-              required: "First name is required",
+              required: "Il nome e' obbligatorio",
               minLength: {
                 value: 3,
-                message: "First name must be at least 3 characters",
+                message: "Il nome deve avere almeno 3 caratteri",
               },
             })}
           />
@@ -120,10 +116,10 @@ export default function CreateDoctorForm() {
             className={`form-control ${errors.last_name ? "is-invalid" : ""}`}
             id="last_name"
             {...register("last_name", {
-              required: "Last name is required",
+              required: "Il cognome e' obbligatorio",
               minLength: {
                 value: 3,
-                message: "Last name must be at least 3 characters",
+                message: "Il cognome deve avere almeno 3 caratteri",
               },
             })}
           />
@@ -141,15 +137,14 @@ export default function CreateDoctorForm() {
             className={`form-control ${errors.phone ? "is-invalid" : ""}`}
             id="phone"
             {...register("phone", {
-              required: "Phone number is required",
+              required: "Numero di telefono obbligatorio",
               pattern: {
                 value: /^\+?\d{10,15}$/,
-                message:
-                  "Phone number must contain only digits and optionally start with '+'",
+                message: "Il numero di telefono deve contenere solo numeri",
               },
               maxLength: {
                 value: 15,
-                message: "Phone number must not exceed 15 characters",
+                message: "Il numero di telefono deve avere almeno 15 caratteri",
               },
             })}
           />
