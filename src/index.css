@@ -157,3 +157,16 @@ main {
   }
   z-index: 1;
 }
+
+@media screen and (min-width: 600px) {
+  .creation-form {
+    margin: 0 8rem;
+  }
+}
+
+/* If screen size is 600px wide, or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  .creation-form {
+    margin: 0 2rem;
+  }
+}

@@ -29,7 +29,7 @@ export default function SelectSpecializations({ ...props }) {
       options={specializations}
       isLoading={isLoading}
       closeMenuOnSelect={false}
-      placeholder="Select specializations"
+      placeholder="Selezionare una o più specializzazioni"
       value={filters.specializations}
       onChange={(specializations) =>
         setFilters({

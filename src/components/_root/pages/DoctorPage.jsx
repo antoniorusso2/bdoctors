@@ -68,8 +68,8 @@ export default function DoctorPage() {
   return (
     <>
       <section className="container mt-5">
-        <div className="row">
-          <div className="col-8 p-4 card-background ">
+        <div className="row d-flex flex-wrap">
+          <div className="col-12 col-md-8 p-4 card-background ">
             <h3 className="mb-4">
               Medico specialista in {doctor.specializations}
             </h3>
@@ -77,20 +77,19 @@ export default function DoctorPage() {
             <p>Email: {doctor.email}</p>
             <p>Telefono: {doctor.phone}</p>
             <p>Indirizzo: {doctor.address}</p>
-
-            <button
-              className="btn btn-primary my-3"
-              onClick={() => setShowForm(!showForm)}
-            >
-              {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
-            </button>
           </div>
 
-          <div className="col-4 map-responsive">
+          <div className="col-12 col-md-4 mb-4" style={{ minHeight: "200px" }}>
             <GoogleMap />
           </div>
         </div>
       </section>
+      <button
+        className="btn btn-primary my-3"
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
+      </button>
       <section className="form-section">
         {showForm && (
           <CreateReviewForm
