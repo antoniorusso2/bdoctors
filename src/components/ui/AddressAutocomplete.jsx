@@ -11,8 +11,8 @@ function AddressAutocomplete({ control, defaultAddress }) {
       name="address"
       control={control}
       rules={{
-        required: "Address is required",
-        minLength: { value: 5, message: "Address must be least 5 characters" },
+        required: "L'indirizzo e' obbligatorio",
+        minLength: { value: 5, message: "L'indirizzo deve avere almeno 5 caratteri" },
       }}
       render={({
         field: { onChange, value, ...restField },
