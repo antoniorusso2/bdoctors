@@ -3,11 +3,11 @@ import { useState } from "react";
 import Card from "../../ui/Card";
 import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
-import { LoaderCircle } from "lucide-react";
 import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
 import useParallaxEffect from "../../ui/Parallax";
 import FormAlert from "../../../components/ui/FormAlert";
+import Loader from "../../Loader";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -58,13 +58,26 @@ export default function HomePage() {
           className="select specializations mb-5 p-4"
         />
       </section>
-      <section>
+      <section className="cards-container">
         {isLoading ? (
-          <div className="d-flex justify-content-center">
-            <LoaderCircle className="loader" size={60} />
-          </div>
+          <Loader />
         ) : doctorsList.length ? (
           <div className="row g-4 align-itmes-center">
+            {doctorsList.map((doctor) => (
+              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
+                <Card doctor={doctor} />
+              </div>
+            ))}
+            {doctorsList.map((doctor) => (
+              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
+                <Card doctor={doctor} />
+              </div>
+            ))}
+            {doctorsList.map((doctor) => (
+              <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
+                <Card doctor={doctor} />
+              </div>
+            ))}
             {doctorsList.map((doctor) => (
               <div key={doctor.id} className="col-fluid col-md-6 col-xl-3 mb-3">
                 <Card doctor={doctor} />

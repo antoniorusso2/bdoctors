@@ -1,10 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { useFilter } from "../context/FilterProvider";
 import SearchDoctorInput from "./ui/SearchDoctorInput";
 
 const Navbar = () => {
-  const { setFilters } = useFilter();
+  const { filters, setFilters } = useFilter();
+
+  function handleSearchDoctor(e) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const doctor = formData.get("doctor");
+    setFilters({ ...filters, doctor });
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
@@ -42,10 +49,25 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <div className="d-flex">
-            <SearchDoctorInput className="me-2" />
-            <button className="btn btn-outline-primary">Cerca</button>
-          </div>
+          {!!useMatch("/") && (
+            <form onSubmit={handleSearchDoctor} className="d-flex">
+              <SearchDoctorInput className="me-2" />
+              <div className="d-flex gap-2">
+                <button type="submit" className="btn btn-outline-primary">
+                  Cerca
+                </button>
+                {!!filters.doctor && (
+                  <button
+                    type="reset"
+                    className="btn btn-outline-danger"
+                    onClick={() => setFilters({ ...filters, doctor: "" })}
+                  >
+                    Resetta
+                  </button>
+                )}
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </nav>
