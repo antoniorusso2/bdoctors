@@ -68,7 +68,10 @@ export default function DoctorPage() {
   return (
     <>
       <section className="container mt-5">
-        <div className="row d-flex flex-wrap">
+        <div 
+          className="row d-flex flex-wrap"
+          style={{ alignItems: "stretch" }}
+        >
           <div className="col-12 col-md-8 p-4 card-background ">
             <h3 className="mb-4">
               Medico specialista in {doctor.specializations}
@@ -79,8 +82,20 @@ export default function DoctorPage() {
             <p>Indirizzo: {doctor.address}</p>
           </div>
 
-          <div className="col-12 col-md-4 mb-4" style={{ minHeight: "200px" }}>
-            <GoogleMap />
+          <div 
+            className="col-12 col-md-4 mb-4" 
+            style={{ display: "flex", alignItems: "center", height: "100%" }}
+            >
+            <div style={{
+               width: "100%", 
+               height: "300px",
+               borderRadius: "8px",
+               overflow: "hidden",    
+               boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" 
+            }}>
+              <GoogleMap />
+            </div>
+            
           </div>
         </div>
       </section>
@@ -116,7 +131,17 @@ export default function DoctorPage() {
           ) : (
             <ul className="list-group">
               {doctor.reviews.map((review) => (
-                <li className="list-group-item" key={review.id}>
+                <li 
+                  className="list-group-item" 
+                  key={review.id}
+                  style={{
+                    padding: "15px",
+                    marginBottom: "15px",
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" 
+                  }}
+                >
+            
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
