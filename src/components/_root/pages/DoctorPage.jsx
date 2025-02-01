@@ -12,6 +12,7 @@ export default function DoctorPage() {
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -98,12 +99,25 @@ export default function DoctorPage() {
           </div>
         </div>
       </section>
+
+      <button
+        className="btn btn-primary my-3"
+        onClick={() => setShowEmailForm(!showEmailForm)}
+      >
+        {showEmailForm ? "Chiudi form" : "Contatta tramite e-mail"}
+      </button>
+
+      <section>
+        {showEmailForm && <EmailDoctorForm doctorEmail={doctor.email} />}
+      </section>
+
       <button
         className="btn btn-primary my-3"
         onClick={() => setShowForm(!showForm)}
       >
         {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
       </button>
+
       <section className="form-section">
         {showForm && (
           <CreateReviewForm
@@ -114,24 +128,25 @@ export default function DoctorPage() {
           />
         )}
       </section>
+
       <section>
         {/* Media dei voti */}
         <div className="mt-4">
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontWeight: "bold",
+            }}
+          >
+            Media delle recensioni:
             {renderStars(calculateAverageRating())}
             <span>{calculateAverageRating()}/5</span>
-          </div>
+          </p>
         </div>
       </section>
-      <EmailDoctorForm doctorEmail={doctor.email} />{" "}
-      {/* Add the new component */}
-      <div className="mt-4">
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {renderStars(calculateAverageRating())}
-          <span>{calculateAverageRating()}/5</span>
-        </div>
-      </div>
-      {/* Sezione recensioni */}
+
       <section>
         <div className="mt-5">
           <h3>Recensioni:</h3>
