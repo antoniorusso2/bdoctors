@@ -46,7 +46,7 @@ export default function EmailDoctorForm({ doctorEmail }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
-            Your Name
+            Inserisci il tuo nome
           </label>
           <input
             type="text"
@@ -61,7 +61,7 @@ export default function EmailDoctorForm({ doctorEmail }) {
 
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Your Email
+            Inserisci la tua e-mail
           </label>
           <input
             type="email"
@@ -82,7 +82,7 @@ export default function EmailDoctorForm({ doctorEmail }) {
 
         <div className="mb-3">
           <label htmlFor="message" className="form-label">
-            Message
+            Scrivi il tuo messaggio
           </label>
           <textarea
             className={`form-control ${errors.message ? "is-invalid" : ""}`}
@@ -95,7 +95,7 @@ export default function EmailDoctorForm({ doctorEmail }) {
           )}
         </div>
 
-        <SubmitButton pending={isSubmitting}>Send Email</SubmitButton>
+        <SubmitButton pending={isSubmitting}>Invia e-mail</SubmitButton>
       </form>
     </>
   );
