@@ -45,7 +45,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="first_name" className="form-label">
-            First Name
+            Nome
           </label>
           <input
             type="text"
@@ -66,7 +66,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="last_name" className="form-label">
-            Last Name
+            Cognome
           </label>
           <input
             type="text"
@@ -87,7 +87,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="rating" className="form-label">
-            Rating
+            Valutazione
           </label>
           <select
             className={`form-select ${errors.rating ? "is-invalid" : ""}`}
@@ -118,7 +118,7 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="review_text" className="form-label">
-            Review
+            Recensione
           </label>
           <textarea
             className={`form-control ${errors.review_text ? "is-invalid" : ""}`}
