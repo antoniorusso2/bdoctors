@@ -5,12 +5,14 @@ import { Star, LoaderCircle } from "lucide-react";
 import CreateReviewForm from "../../forms/CreateReviewForm";
 import GoogleMap from "../../ui/Map";
 import FormAlert from "../../ui/FormAlert";
+import EmailDoctorForm from "../../ui/EmailDoctorForm"; // Import the new component
 
 export default function DoctorPage() {
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -68,10 +70,7 @@ export default function DoctorPage() {
   return (
     <>
       <section className="container mt-5">
-        <div 
-          className="row d-flex flex-wrap"
-          style={{ alignItems: "stretch" }}
-        >
+        <div className="row d-flex flex-wrap" style={{ alignItems: "stretch" }}>
           <div className="col-12 col-md-8 p-4 card-background ">
             <h3 className="mb-4">
               Medico specialista in {doctor.specializations}
@@ -82,29 +81,43 @@ export default function DoctorPage() {
             <p>Indirizzo: {doctor.address}</p>
           </div>
 
-          <div 
-            className="col-12 col-md-4 mb-4" 
+          <div
+            className="col-12 col-md-4 mb-4"
             style={{ display: "flex", alignItems: "center", height: "100%" }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "300px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+              }}
             >
-            <div style={{
-               width: "100%", 
-               height: "300px",
-               borderRadius: "8px",
-               overflow: "hidden",    
-               boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" 
-            }}>
               <GoogleMap />
             </div>
-            
           </div>
         </div>
       </section>
+
+      <button
+        className="btn btn-primary my-3"
+        onClick={() => setShowEmailForm(!showEmailForm)}
+      >
+        {showEmailForm ? "Chiudi form" : "Contatta tramite e-mail"}
+      </button>
+
+      <section>
+        {showEmailForm && <EmailDoctorForm doctorEmail={doctor.email} />}
+      </section>
+
       <button
         className="btn btn-primary my-3"
         onClick={() => setShowForm(!showForm)}
       >
         {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
       </button>
+
       <section className="form-section">
         {showForm && (
           <CreateReviewForm
@@ -115,14 +128,25 @@ export default function DoctorPage() {
           />
         )}
       </section>
-      {/* Media dei voti */}
-      <div className="mt-4">
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {renderStars(calculateAverageRating())}
-          <span>{calculateAverageRating()}/5</span>
+
+      <section>
+        {/* Media dei voti */}
+        <div className="mt-4">
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontWeight: "bold",
+            }}
+          >
+            Media delle recensioni:
+            {renderStars(calculateAverageRating())}
+            <span>{calculateAverageRating()}/5</span>
+          </p>
         </div>
-      </div>
-      {/* Sezione recensioni */}
+      </section>
+
       <section>
         <div className="mt-5">
           <h3>Recensioni:</h3>
@@ -131,17 +155,16 @@ export default function DoctorPage() {
           ) : (
             <ul className="list-group">
               {doctor.reviews.map((review) => (
-                <li 
-                  className="list-group-item" 
+                <li
+                  className="list-group-item"
                   key={review.id}
                   style={{
                     padding: "15px",
                     marginBottom: "15px",
                     borderRadius: "8px",
-                    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" 
+                    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-            
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
