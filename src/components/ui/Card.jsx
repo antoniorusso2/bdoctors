@@ -1,11 +1,12 @@
-import { Star } from "lucide-react";
-import { Link } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Card({ doctor }) {
   return (
     <>
       <Link
-        to={`/doctors/${doctor.id}`}
+        to={`/doctors/${doctor.slug}`}
         className="card border-0 main-card p-3 card-background text-decoration-none"
       >
         <div className="card-body">
@@ -22,7 +23,7 @@ export default function Card({ doctor }) {
                 key={i}
                 className="starAvg text-warning"
                 fill={
-                  i + 1 <= doctor.avg_rating ? "currentColor" : "transparent"
+                  i + 1 <= doctor.avg_rating ? 'currentColor' : 'transparent'
                 }
               />
             ))}

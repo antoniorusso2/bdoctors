@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { api } from "../../../lib/api";
-import { Star, LoaderCircle } from "lucide-react";
-import CreateReviewForm from "../../forms/CreateReviewForm";
-import GoogleMap from "../../ui/Map";
-import FormAlert from "../../ui/FormAlert";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { api } from '../../../lib/api';
+import { Star, LoaderCircle } from 'lucide-react';
+import CreateReviewForm from '../../forms/CreateReviewForm';
+import GoogleMap from '../../ui/Map';
+import FormAlert from '../../ui/FormAlert';
 
 export default function DoctorPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -15,17 +15,17 @@ export default function DoctorPage() {
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const response = await api.get(`/doctors/${id}`);
+        const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
       } catch (error) {
-        console.error("Error fetching doctor data:", error);
+        console.error('Error fetching doctor data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchDoctor();
-  }, [id]);
+  }, [slug]);
 
   // Funzione per calcolare la media voti
   const calculateAverageRating = () => {
@@ -62,10 +62,10 @@ export default function DoctorPage() {
   }
 
   if (!doctor) {
-    return <FormAlert error={{ message: "Medico non trovato" }} />;
+    return <FormAlert error={{ message: 'Medico non trovato' }} />;
   }
 
-  const coordinates = doctor.address;
+  const coordinates = doctor.coordinates;
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function DoctorPage() {
               className="btn btn-primary my-3"
               onClick={() => setShowForm(!showForm)}
             >
-              {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
+              {showForm ? 'Nascondi Recensione' : 'Scrivi una recensione'}
             </button>
           </div>
 
@@ -96,7 +96,7 @@ export default function DoctorPage() {
       <section className="form-section">
         {showForm && (
           <CreateReviewForm
-            doctorId={id}
+            doctorId={doctor.id}
             onReviewCreate={(review) =>
               setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
             }
@@ -105,7 +105,7 @@ export default function DoctorPage() {
       </section>
       {/* Media dei voti */}
       <div className="mt-4">
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {renderStars(calculateAverageRating())}
           <span>{calculateAverageRating()}/5</span>
         </div>
@@ -123,9 +123,9 @@ export default function DoctorPage() {
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                     }}
                   >
                     {/* Stelle accanto al rating */}
