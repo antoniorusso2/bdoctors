@@ -42,15 +42,15 @@ export default function CreateDoctorForm() {
   return (
     <>
       <FormAlert success={isSubmitSuccessful} error={errors.root} />
-      <form id="create-doctor-form" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="specializations" className="form-label">
-            Specializations
+            Specializzazioni
           </label>
           <Controller
             name="specializations"
             control={control}
-            rules={{ required: "Please select at least one specialization" }}
+            rules={{ required: "Seleziona almeno una specializzazione" }}
             render={({ field }) => (
               <SelectSpecializations
                 {...field}
@@ -67,17 +67,17 @@ export default function CreateDoctorForm() {
 
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Email
+            E-mail
           </label>
           <input
             type="email"
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
             id="email"
             {...register("email", {
-              required: "Email is required",
+              required: "L'email e' obbligatoria",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "The entered email is not valid",
+                message: "Email non invalida",
               },
             })}
           />
@@ -87,65 +87,64 @@ export default function CreateDoctorForm() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">
-            First Name
+          <label htmlFor="first_name" className="form-label">
+            Nome
           </label>
           <input
             type="text"
-            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
-            id="firstName"
-            {...register("firstName", {
-              required: "First name is required",
+            className={`form-control ${errors.first_name ? "is-invalid" : ""}`}
+            id="first_name"
+            {...register("first_name", {
+              required: "Il nome e' obbligatorio",
               minLength: {
                 value: 3,
-                message: "First name must be at least 3 characters",
+                message: "Il nome deve avere almeno 3 caratteri",
               },
             })}
           />
-          {errors.firstName && (
-            <div className="invalid-feedback">{errors.firstName.message}</div>
+          {errors.first_name && (
+            <div className="invalid-feedback">{errors.first_name.message}</div>
           )}
         </div>
 
         <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">
-            Last Name
+          <label htmlFor="last_name" className="form-label">
+            Cognome
           </label>
           <input
             type="text"
-            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
-            id="lastName"
-            {...register("lastName", {
-              required: "Last name is required",
+            className={`form-control ${errors.last_name ? "is-invalid" : ""}`}
+            id="last_name"
+            {...register("last_name", {
+              required: "Il cognome e' obbligatorio",
               minLength: {
                 value: 3,
-                message: "Last name must be at least 3 characters",
+                message: "Il cognome deve avere almeno 3 caratteri",
               },
             })}
           />
-          {errors.lastName && (
-            <div className="invalid-feedback">{errors.lastName.message}</div>
+          {errors.last_name && (
+            <div className="invalid-feedback">{errors.last_name.message}</div>
           )}
         </div>
 
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
-            Phone
+            Telefono
           </label>
           <input
             type="tel"
             className={`form-control ${errors.phone ? "is-invalid" : ""}`}
             id="phone"
             {...register("phone", {
-              required: "Phone number is required",
+              required: "Numero di telefono obbligatorio",
               pattern: {
                 value: /^\+?\d{10,15}$/,
-                message:
-                  "Phone number must contain only digits and optionally start with '+'",
+                message: "Il numero di telefono deve contenere solo numeri",
               },
               maxLength: {
                 value: 15,
-                message: "Phone number must not exceed 15 characters",
+                message: "Il numero di telefono deve avere almeno 15 caratteri",
               },
             })}
           />
@@ -154,9 +153,9 @@ export default function CreateDoctorForm() {
           )}
         </div>
 
-        <div className="mb-3">
+        <div className="mb-5">
           <label htmlFor="address" className="form-label">
-            Address
+            Indirizzo
           </label>
           <AddressAutocomplete
             control={control}
@@ -167,7 +166,7 @@ export default function CreateDoctorForm() {
           )}
         </div>
 
-        <SubmitButton pending={isSubmitting}>Crea dottore</SubmitButton>
+        <SubmitButton pending={isSubmitting}>Crea il tuo profilo</SubmitButton>
       </form>
     </>
   );

@@ -45,17 +45,17 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="first_name" className="form-label">
-            First Name
+            Nome
           </label>
           <input
             type="text"
             className={`form-control ${errors.first_name ? "is-invalid" : ""}`}
             id="first_name"
             {...register("first_name", {
-              required: "First name is required",
+              required: "Il nome e' obbligatorio",
               minLength: {
                 value: 2,
-                message: "First name must be at least 2 characters",
+                message: "Il nome deve avere almeno 3 caratteri",
               },
             })}
           />
@@ -66,17 +66,17 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="last_name" className="form-label">
-            Last Name
+            Cognome
           </label>
           <input
             type="text"
             className={`form-control ${errors.last_name ? "is-invalid" : ""}`}
             id="last_name"
             {...register("last_name", {
-              required: "Last name is required",
+              required: "Il cognome e' obbligatorio",
               minLength: {
-                value: 2,
-                message: "Last name must be at least 2 characters",
+                value: 3,
+                message: "Il cognome deve avere almeno 3 caratteri",
               },
             })}
           />
@@ -87,20 +87,20 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="rating" className="form-label">
-            Rating
+            Valutazione
           </label>
           <select
             className={`form-select ${errors.rating ? "is-invalid" : ""}`}
             id="rating"
             {...register("rating", {
-              required: "Rating is required",
+              required: "Il voto e' obbligatorio",
               min: {
                 value: 1,
-                message: "Rating must be between 1 and 5",
+                message: "Il voto deve essere un valore tra 1 and 5",
               },
               max: {
                 value: 5,
-                message: "Rating must be between 1 and 5",
+                message: "Il voto deve essere un valore tra 1 and 5",
               },
             })}
           >
@@ -118,17 +118,17 @@ export default function CreateReviewForm({ doctorId, onReviewCreate }) {
 
         <div className="mb-3">
           <label htmlFor="review_text" className="form-label">
-            Review
+            Recensione
           </label>
           <textarea
             className={`form-control ${errors.review_text ? "is-invalid" : ""}`}
             id="review_text"
             rows="4"
             {...register("review_text", {
-              required: "Review text is required",
+              required: "La recensione e' obbligatoria",
               minLength: {
                 value: 10,
-                message: "Review must be at least 10 characters long",
+                message: "La recensione deve avere almeno 10 caratteri",
               },
             })}
           ></textarea>

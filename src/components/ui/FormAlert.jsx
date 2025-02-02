@@ -8,7 +8,7 @@ export default function FormAlert({ success, error }) {
       )}
       {success && (
         <div className="alert alert-success" role="alert">
-          Recensione inviata con successo
+          Dati inviati con successo
         </div>
       )}
     </>

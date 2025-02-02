@@ -5,10 +5,11 @@ import SearchDoctorInput from "../../ui/SearchDoctorInput";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import SubmitButton from "../../ui/SubmitButton";
 import Card from "../../ui/Card";
+import Loader from "../../Loader";
 
 export default function SearchDoctorsPage() {
   const [results, setResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -17,13 +18,17 @@ export default function SearchDoctorsPage() {
   const handleSetResults = async (params) => {
     setIsLoading(true);
     setError(null);
+
     try {
-      const response = await api.get("/doctors", {
-        params: {
-          ...params,
-          specializations: params.specializations.map((s) => s.value),
-        },
-      });
+      const response = await api.get(
+        "/doctors",
+        params && {
+          params: { 
+            ...params,
+            specializations: params.specializations.map((s) => s.value),
+          },
+        }
+      );
       setResults(response.data);
     } catch (err) {
       setError("An error occurred while fetching results. Please try again.");
@@ -35,36 +40,39 @@ export default function SearchDoctorsPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (
-      !filters.specializations.length &&
-      !filters.doctor &&
-      !filters.min_rating
-    )
+    const formData = new FormData(e.currentTarget);
+    const doctor = formData.get("doctor");
+    setFilters({ ...filters, doctor });
+
+    if (!filters.specializations.length && !doctor && !filters.min_rating)
       return;
 
-    handleSetResults(filters);
+    handleSetResults({ ...filters, doctor });
   }
 
   useEffect(() => {
-    handleSetResults(filters);
-  }, [filters]);
+    handleSetResults();
+  }, []);
 
   return (
-    <div className="">
+    <div className="search-doctors">
       <div className="row">
         {/* Sidebar for filters */}
         <div
-          className={`col-xl-3 py-4 rounded-4 d-md-block bg-light sidebar collapse ${
+          className={`col-xl-3 d-md-block sidebar collapse ${
             isSidebarOpen ? "show" : ""
           }`}
           id="sidebarMenu"
         >
-          <div className="position-sticky">
-            <h5 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 text-muted">
+          <div className="position-sticky bg-light p-4 p-xl-2 rounded-4 mb-4 mb-xl-0">
+            <h5
+              className="sidebar-heading d-flex justify-content-between align-items-center
+             mb-2 text-muted"
+            >
               <span>Filtri di Ricerca</span>
             </h5>
             <form onSubmit={handleSubmit}>
-              <div className="mb-3 px-3">
+              <div className="mb-3">
                 <label htmlFor="doctor" className="form-label">
                   Nome, Cognome o Email
                 </label>
@@ -73,7 +81,7 @@ export default function SearchDoctorsPage() {
                   placeholder="Es. Marco Rossi o marco@example.com"
                 />
               </div>
-              <div className="mb-3 px-3">
+              <div className="mb-3">
                 <label htmlFor="minRating" className="form-label">
                   Valutazione Minima
                 </label>
@@ -93,20 +101,29 @@ export default function SearchDoctorsPage() {
                   <option value="1">1 stella o più</option>
                 </select>
               </div>
-              <div className="mb-3 px-3">
+              <div className="mb-3">
                 <label htmlFor="specializations" className="form-label">
                   Specializzazione
                 </label>
-                <SelectSpecializations id="specializations" />
+                <SelectSpecializations
+                  id="specializations"
+                  className="advanced-select-specializations"
+                />
               </div>
-              <div className="row g-3 px-3">
+              <div className="row g-2">
                 <div className="col-6 col-xl-12">
                   <button
                     type="button"
                     className="btn bg-danger text-white w-100"
                     onClick={() => {
-                      setFilters(defaultFilters);
-                      handleSetResults(defaultFilters);
+                      if (
+                        filters.specializations.length ||
+                        filters.doctor ||
+                        filters.min_rating
+                      ) {
+                        setFilters(defaultFilters);
+                        handleSetResults(defaultFilters);
+                      }
                     }}
                   >
                     Resetta filtri
@@ -124,7 +141,10 @@ export default function SearchDoctorsPage() {
 
         {/* Main content */}
         <main className="ms-sm-auto col-xl-9 px-md-4">
-          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <div
+            className="d-flex justify-content-between flex-wrap flex-md-nowrap
+           align-items-center pb-2 mb-3 border-bottom"
+          >
             <h1 className="h2">Ricerca Avanzata Medici</h1>
             <button
               className="btn btn-primary d-md-none"
@@ -147,6 +167,7 @@ export default function SearchDoctorsPage() {
               ))}
             </div>
           )}
+          {isLoading && <Loader />}
           {!results.length && !isLoading && !error && (
             <div className="alert alert-info mt-4" role="alert">
               Nessun risultato trovato. Prova a modificare i criteri di ricerca.
