@@ -7,8 +7,9 @@ import GoogleMap from "../../ui/Map";
 import FormAlert from "../../ui/FormAlert";
 import EmailDoctorForm from "../../ui/EmailDoctorForm"; // Import the new component
 
+
 export default function DoctorPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -17,17 +18,17 @@ export default function DoctorPage() {
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const response = await api.get(`/doctors/${id}`);
+        const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
       } catch (error) {
-        console.error("Error fetching doctor data:", error);
+        console.error('Error fetching doctor data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchDoctor();
-  }, [id]);
+  }, [slug]);
 
   // Funzione per calcolare la media voti
   const calculateAverageRating = () => {
@@ -64,8 +65,10 @@ export default function DoctorPage() {
   }
 
   if (!doctor) {
-    return <FormAlert error={{ message: "Medico non trovato" }} />;
+    return <FormAlert error={{ message: 'Medico non trovato' }} />;
   }
+
+  const coordinates = doctor.coordinates;
 
   return (
     <>
@@ -79,23 +82,18 @@ export default function DoctorPage() {
             <p>Email: {doctor.email}</p>
             <p>Telefono: {doctor.phone}</p>
             <p>Indirizzo: {doctor.address}</p>
+
+            <button
+              className="btn btn-primary my-3"
+              onClick={() => setShowForm(!showForm)}
+            >
+              {showForm ? 'Nascondi Recensione' : 'Scrivi una recensione'}
+            </button>
           </div>
 
-          <div
-            className="col-12 col-md-4 mb-4"
-            style={{ display: "flex", alignItems: "center", height: "100%" }}
-          >
-            <div
-              style={{
-                width: "100%",
-                height: "300px",
-                borderRadius: "8px",
-                overflow: "hidden",
-                boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <GoogleMap />
-            </div>
+          <div className="col-4 map-responsive">
+            <GoogleMap coordinates={coordinates} />
+
           </div>
         </div>
       </section>
@@ -121,7 +119,7 @@ export default function DoctorPage() {
       <section className="form-section">
         {showForm && (
           <CreateReviewForm
-            doctorId={id}
+            doctorId={doctor.id}
             onReviewCreate={(review) =>
               setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
             }
@@ -144,6 +142,7 @@ export default function DoctorPage() {
             {renderStars(calculateAverageRating())}
             <span>{calculateAverageRating()}/5</span>
           </p>
+
         </div>
       </section>
 
@@ -168,9 +167,9 @@ export default function DoctorPage() {
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                     }}
                   >
                     {/* Stelle accanto al rating */}
