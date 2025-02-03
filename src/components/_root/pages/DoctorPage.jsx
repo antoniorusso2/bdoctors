@@ -14,12 +14,28 @@ export default function DoctorPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [coordinates, setCoordinates] = useState(null);
+
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
+
+
+        // Fetch coordinates from address
+        const geocodeResponse = await api.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            response.data.address
+          )}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+        );
+
+        if (geocodeResponse.data.results.length > 0) {
+          const location = geocodeResponse.data.results[0].geometry.location;
+          setCoordinates({ lat: location.lat, lng: location.lng });
+        }
+
       } catch (error) {
         console.error('Error fetching doctor data:', error);
       } finally {
@@ -68,7 +84,7 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: 'Medico non trovato' }} />;
   }
 
-  const coordinates = doctor.coordinates;
+  console.log(doctor)
 
   return (
     <>
@@ -83,12 +99,7 @@ export default function DoctorPage() {
             <p>Telefono: {doctor.phone}</p>
             <p>Indirizzo: {doctor.address}</p>
 
-            <button
-              className="btn btn-primary my-3"
-              onClick={() => setShowForm(!showForm)}
-            >
-              {showForm ? 'Nascondi Recensione' : 'Scrivi una recensione'}
-            </button>
+           
           </div>
 
           <div className="col-4 map-responsive">
