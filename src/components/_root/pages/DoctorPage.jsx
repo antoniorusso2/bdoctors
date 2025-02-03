@@ -8,17 +8,30 @@ import FormAlert from '../../ui/FormAlert';
 import EmailDoctorForm from '../../ui/EmailDoctorForm'; // Import the new component
 
 export default function DoctorPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [coordinates, setCoordinates] = useState(null);
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
-        const response = await api.get(`/doctors/${id}`);
+        const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
+
+        // Fetch coordinates from address
+        const geocodeResponse = await api.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            response.data.address
+          )}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+        );
+
+        if (geocodeResponse.data.results.length > 0) {
+          const location = geocodeResponse.data.results[0].geometry.location;
+          setCoordinates({ lat: location.lat, lng: location.lng });
+        }
       } catch (error) {
         console.error('Error fetching doctor data:', error);
       } finally {
@@ -27,7 +40,7 @@ export default function DoctorPage() {
     };
 
     fetchDoctor();
-  }, [id]);
+  }, [slug]);
 
   // Funzione per calcolare la media voti
   const calculateAverageRating = () => {
@@ -67,10 +80,14 @@ export default function DoctorPage() {
     return <FormAlert error={{ message: 'Medico non trovato' }} />;
   }
 
+  console.log(doctor);
+
   return (
     <>
+
       <section className="container mt-5">
         <div className="row d-flex flex-wrap" style={{ alignItems: 'stretch' }}>
+
           <div className="col-12 col-md-8 p-4 card-background ">
             <h3 className="mb-4 fw-light">
               Medico specialista in:{' '}
@@ -87,6 +104,7 @@ export default function DoctorPage() {
             <p>Indirizzo: {doctor.address}</p>
           </div>
 
+
           <div
             className="col-12 col-md-4 mb-4"
             style={{ display: 'flex', alignItems: 'center', height: '100%' }}
@@ -102,6 +120,7 @@ export default function DoctorPage() {
             >
               <GoogleMap />
             </div>
+
           </div>
         </div>
       </section>
@@ -130,20 +149,31 @@ export default function DoctorPage() {
         </button>
       </section>
 
-      <section>
-        {showEmailForm && <EmailDoctorForm doctorEmail={doctor.email} />}
-      </section>
+      {showEmailForm && (
+        <section>
+          <EmailDoctorForm doctorEmail={doctor.email} />
+        </section>
+      )}
 
-      <section className="form-section">
-        {showForm && (
-          <CreateReviewForm
-            doctorId={id}
-            onReviewCreate={(review) =>
-              setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
-            }
-          />
-        )}
-      </section>
+      <button
+        className={`btn btn-primary my-3 ${!showEmailForm ? "ms-2" : ""}`}
+        onClick={() => setShowForm(!showForm)}
+      >
+        {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
+      </button>
+
+      {showForm && (
+        <>
+          <section className="form-section">
+            <CreateReviewForm
+              doctorId={doctor.id}
+              onReviewCreate={(review) =>
+                setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+              }
+            />
+          </section>
+        </>
+      )}
 
       <section>
         {/* Media dei voti */}

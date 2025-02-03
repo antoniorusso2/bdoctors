@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { api } from "../../lib/api";
-import { useFilter } from "../../context/FilterProvider";
+import useFilters from "../../hooks/useFilter";
 
 export default function SelectSpecializations({ ...props }) {
   const [isLoading, setIsLoading] = useState(true);
   const [specializations, setSpecializations] = useState([]);
 
-  const { filters, setFilters } = useFilter();
+  const { filters, setSpecializations: setSpecializationsParams } =
+    useFilters();
 
   useEffect(() => {
     const fetchSpecializations = async () => {
@@ -28,14 +29,13 @@ export default function SelectSpecializations({ ...props }) {
     <Select
       options={specializations}
       isLoading={isLoading}
+      value={specializations.filter((specialization) =>
+        filters.specializations.includes(specialization.value.toString())
+      )}
       closeMenuOnSelect={false}
       placeholder="Selezionare specializzazioni"
-      value={filters.specializations}
       onChange={(specializations) =>
-        setFilters({
-          ...filters,
-          specializations,
-        })
+        setSpecializationsParams(specializations.map((s) => s.value))
       }
       isMulti
       {...props}

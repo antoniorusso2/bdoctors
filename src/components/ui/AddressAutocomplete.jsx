@@ -4,6 +4,7 @@ import { Controller } from "react-hook-form";
 
 function AddressAutocomplete({ control, defaultAddress }) {
   const [address, setAddress] = useState(defaultAddress);
+  // const [coordinates, setCoordinates] = useState([]);
   const autocompleteRef = useRef(null);
 
   return (
@@ -21,10 +22,14 @@ function AddressAutocomplete({ control, defaultAddress }) {
         <Autocomplete
           onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
           onPlaceChanged={() => {
-            const { formatted_address } = autocompleteRef.current.getPlace();
-            if (formatted_address) {
-              setAddress(formatted_address);
-              onChange(formatted_address);
+            // const { formatted_address, geometry } =
+            //   autocompleteRef.current.getPlace();
+            if (autocompleteRef.current.getPlace()) {
+              setAddress(autocompleteRef.current.getPlace());
+              // setCoordinates(geometry.location.lat(), geometry.location.lng());
+              onChange(autocompleteRef.current.getPlace().formatted_address);
+              console.log(address.formatted_address);
+              console.log(address.geometry.location.lat());
             }
           }}
           restrictions={{ country: "it" }}
@@ -36,8 +41,10 @@ function AddressAutocomplete({ control, defaultAddress }) {
             placeholder="Inserisci il tuo indirizzo"
             className={`form-control ${error ? "is-invalid" : ""}`}
             {...restField}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+
+            value={address.formatted_address}
+            onChange={(e) => setAddress(e.target.value.trim())}
+
           />
         </Autocomplete>
       )}

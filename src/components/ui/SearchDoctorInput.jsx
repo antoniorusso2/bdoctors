@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
-import { useFilter } from "../../context/FilterProvider";
+import useFilters from "../../hooks/useFilter";
 
 export default function SearchDoctorInput({ className, ...props }) {
-  const { filters } = useFilter();
-  const [doctor, setDoctor] = useState(filters.doctor);
+  const { filters } = useFilters();
 
-  useEffect(() => {
-    if (!filters.doctor) setDoctor("");
-  }, [filters.doctor]);
+  // console.log(filters);
 
   return (
     <input
       type="text"
-      value={doctor}
+      defaultValue={filters.doctor}
       name="doctor"
       className={`form-control ${className}`}
       placeholder="Cerca dottore"
       aria-label="Search doctor"
-      onChange={(e) => setDoctor(e.target.value)}
       {...props}
     />
   );
