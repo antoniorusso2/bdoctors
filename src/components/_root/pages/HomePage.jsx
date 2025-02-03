@@ -3,11 +3,11 @@ import { useState } from "react";
 import Card from "../../ui/Card";
 import { api } from "../../../lib/api";
 import SelectSpecializations from "../../ui/SelectSpecializations";
-import { useFilter } from "../../../context/FilterProvider";
 import { Link } from "react-router-dom";
 import useParallaxEffect from "../../ui/Parallax";
 import FormAlert from "../../../components/ui/FormAlert";
 import Loader from "../../Loader";
+import useFilters from "../../../hooks/useFilter";
 
 export default function HomePage() {
   useParallaxEffect();
@@ -16,27 +16,27 @@ export default function HomePage() {
   const [doctorsList, setDoctorsList] = useState([]);
 
   const {
-    filters: { specializations, doctor },
-  } = useFilter();
+    searchParams,
+    filters: { doctor, specializations },
+  } = useFilters();
 
   useEffect(() => {
     api
       .get(`/doctors`, {
         params: {
-          specializations: specializations.map((s) => s.value),
+          specializations,
           doctor,
         },
       })
       .then((res) => {
-        console.log(res.data);
         setDoctorsList(res.data);
       })
       .catch((err) => {
         console.error(err);
       })
       .finally(() => setIsLoading(false));
-  }, [specializations, doctor]);
-
+  }, [doctor, specializations.join(",")]);
+  
   return (
     <>
       <div className="parallax-bg"></div>
@@ -47,7 +47,10 @@ export default function HomePage() {
             I migliori medici specialisti<br></br>vicino a te
           </h1>
           <div className="search-link-container">
-            <Link to="/doctors/search" className="search-link">
+            <Link
+              to={`/doctors/search?${searchParams.toString()}`}
+              className="search-link"
+            >
               Ricerca avanzata
             </Link>
           </div>
