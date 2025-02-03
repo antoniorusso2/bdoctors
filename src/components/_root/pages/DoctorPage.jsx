@@ -87,9 +87,9 @@ export default function DoctorPage() {
       <section className="container">
         <div className="row d-flex flex-wrap" style={{ alignItems: "stretch" }}>
           <div className="col-12 col-md-8 p-4 card-background ">
-            <h3 className="mb-4">
+            <h2 className="mb-4">
               Medico specialista in {doctor.specializations}
-            </h3>
+            </h2>
             <h2 className="mb-5">{`${doctor.first_name} ${doctor.last_name}`}</h2>
             <p>Email: {doctor.email}</p>
             <p>Telefono: {doctor.phone}</p>
