@@ -59,7 +59,7 @@ export default function SearchDoctorsPage() {
       <div className="row">
         {/* Sidebar for filters */}
         <div
-          className={`col-xl-3 d-md-block sidebar collapse ${
+          className={`col-xl-3 d-md-block sidebar collapse z-3 ${
             isSidebarOpen ? "show" : ""
           }`}
           id="sidebarMenu"
