@@ -13,6 +13,7 @@ export default function GoogleMap({ coordinates }) {
       <Map
         defaultZoom={13}
         defaultCenter={{ lat: coordinates.lat, lng: coordinates.lng }}
+        className=''
       >
         <Marker position={{ lat: coordinates.lat, lng: coordinates.lng }} />
       </Map>

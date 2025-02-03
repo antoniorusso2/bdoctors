@@ -1,13 +1,12 @@
-export default function SubmitButton({ children, className = "", pending }) {
+/* eslint-disable react/prop-types */
+export default function SubmitButton({ children, className = '', pending }) {
   return (
     <button
       type="submit"
-      className={`btn bg-primary text-white ${className} ${
-        pending ? "opacity-75" : ""
-      }`}
+      className={`btn btn-success  ${className} ${pending ? 'opacity-75' : ''}`}
       disabled={pending}
     >
-      {pending ? "Loading..." : children}
+      {pending ? 'Loading...' : children}
     </button>
   );
 }
