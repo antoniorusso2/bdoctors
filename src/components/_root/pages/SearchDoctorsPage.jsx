@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
-import { defaultFilters, useFilter } from "../../../context/FilterProvider";
 import SearchDoctorInput from "../../ui/SearchDoctorInput";
 import SelectSpecializations from "../../ui/SelectSpecializations";
 import SubmitButton from "../../ui/SubmitButton";
 import Card from "../../ui/Card";
 import Loader from "../../Loader";
+import useFilters from "../../../hooks/useFilter";
 
 export default function SearchDoctorsPage() {
   const [results, setResults] = useState([]);
@@ -13,22 +13,14 @@ export default function SearchDoctorsPage() {
   const [error, setError] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { filters, setFilters } = useFilter();
+  const { filters, handleSubmit, resetFilters } = useFilters();
 
-  const handleSetResults = async (params) => {
+  const handleSetResults = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await api.get(
-        "/doctors",
-        params && {
-          params: { 
-            ...params,
-            specializations: params.specializations.map((s) => s.value),
-          },
-        }
-      );
+      const response = await api.get("/doctors", { params: filters });
       setResults(response.data);
     } catch (err) {
       setError("An error occurred while fetching results. Please try again.");
@@ -38,21 +30,9 @@ export default function SearchDoctorsPage() {
     }
   };
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const doctor = formData.get("doctor");
-    setFilters({ ...filters, doctor });
-
-    if (!filters.specializations.length && !doctor && !filters.min_rating)
-      return;
-
-    handleSetResults({ ...filters, doctor });
-  }
-
   useEffect(() => {
     handleSetResults();
-  }, []);
+  }, [filters.doctor, filters.min_rating, filters.specializations.join(",")]);
 
   return (
     <div className="search-doctors">
@@ -88,10 +68,8 @@ export default function SearchDoctorsPage() {
                 <select
                   className="form-select"
                   id="minRating"
-                  value={filters.min_rating}
-                  onChange={(e) =>
-                    setFilters({ ...filters, min_rating: e.target.value })
-                  }
+                  defaultValue={filters.min_rating}
+                  name="min_rating"
                 >
                   <option value="">Tutte le valutazioni</option>
                   <option value="5">5 stelle</option>
@@ -113,21 +91,18 @@ export default function SearchDoctorsPage() {
               <div className="row g-2">
                 <div className="col-6 col-xl-12">
                   <button
-                    type="button"
-                    className="btn bg-danger text-white w-100"
-                    onClick={() => {
-                      if (
-                        filters.specializations.length ||
-                        filters.doctor ||
-                        filters.min_rating
-                      ) {
-                        setFilters(defaultFilters);
-                        handleSetResults(defaultFilters);
-                      }
-                    }}
+                    type="reset"
+                    className="btn bg-danger w-100 text-white"
+                    onClick={resetFilters}
                   >
                     Resetta filtri
                   </button>
+                  {/* <Link
+                    className="btn bg-danger text-white w-100"
+                    to="/doctors/search"
+                  >
+                    Resetta filtri
+                  </Link> */}
                 </div>
                 <div className="col-6 col-xl-12">
                   <SubmitButton pending={isLoading} className="w-100">
