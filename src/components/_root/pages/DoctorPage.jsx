@@ -7,7 +7,6 @@ import GoogleMap from "../../ui/Map";
 import FormAlert from "../../ui/FormAlert";
 import EmailDoctorForm from "../../ui/EmailDoctorForm"; // Import the new component
 
-
 export default function DoctorPage() {
   const { slug } = useParams();
   const [doctor, setDoctor] = useState(null);
@@ -16,13 +15,11 @@ export default function DoctorPage() {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [coordinates, setCoordinates] = useState(null);
 
-
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
-
 
         // Fetch coordinates from address
         const geocodeResponse = await api.get(
@@ -35,9 +32,8 @@ export default function DoctorPage() {
           const location = geocodeResponse.data.results[0].geometry.location;
           setCoordinates({ lat: location.lat, lng: location.lng });
         }
-
       } catch (error) {
-        console.error('Error fetching doctor data:', error);
+        console.error("Error fetching doctor data:", error);
       } finally {
         setLoading(false);
       }
@@ -81,14 +77,14 @@ export default function DoctorPage() {
   }
 
   if (!doctor) {
-    return <FormAlert error={{ message: 'Medico non trovato' }} />;
+    return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
 
-  console.log(doctor)
+  console.log(doctor);
 
   return (
     <>
-      <section className="container mt-5">
+      <section className="container">
         <div className="row d-flex flex-wrap" style={{ alignItems: "stretch" }}>
           <div className="col-12 col-md-8 p-4 card-background ">
             <h3 className="mb-4">
@@ -98,13 +94,10 @@ export default function DoctorPage() {
             <p>Email: {doctor.email}</p>
             <p>Telefono: {doctor.phone}</p>
             <p>Indirizzo: {doctor.address}</p>
-
-           
           </div>
 
           <div className="col-4 map-responsive">
             <GoogleMap coordinates={coordinates} />
-
           </div>
         </div>
       </section>
@@ -116,27 +109,31 @@ export default function DoctorPage() {
         {showEmailForm ? "Chiudi form" : "Contatta tramite e-mail"}
       </button>
 
-      <section>
-        {showEmailForm && <EmailDoctorForm doctorEmail={doctor.email} />}
-      </section>
+      {showEmailForm && (
+        <section>
+          <EmailDoctorForm doctorEmail={doctor.email} />
+        </section>
+      )}
 
       <button
-        className="btn btn-primary my-3"
+        className={`btn btn-primary my-3 ${!showEmailForm ? "ms-2" : ""}`}
         onClick={() => setShowForm(!showForm)}
       >
         {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
       </button>
 
-      <section className="form-section">
-        {showForm && (
-          <CreateReviewForm
-            doctorId={doctor.id}
-            onReviewCreate={(review) =>
-              setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
-            }
-          />
-        )}
-      </section>
+      {showForm && (
+        <>
+          <section className="form-section">
+            <CreateReviewForm
+              doctorId={doctor.id}
+              onReviewCreate={(review) =>
+                setDoctor({ ...doctor, reviews: [review, ...doctor.reviews] })
+              }
+            />
+          </section>
+        </>
+      )}
 
       <section>
         {/* Media dei voti */}
@@ -153,7 +150,6 @@ export default function DoctorPage() {
             {renderStars(calculateAverageRating())}
             <span>{calculateAverageRating()}/5</span>
           </p>
-
         </div>
       </section>
 
@@ -178,9 +174,9 @@ export default function DoctorPage() {
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
                     }}
                   >
                     {/* Stelle accanto al rating */}
