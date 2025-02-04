@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { api } from '../../../lib/api';
-import { Star, LoaderCircle } from 'lucide-react';
-import CreateReviewForm from '../../forms/CreateReviewForm';
-import GoogleMap from '../../ui/Map';
-import FormAlert from '../../ui/FormAlert';
-import EmailDoctorForm from '../../ui/EmailDoctorForm'; // Import the new component
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../../../lib/api";
+import { Star, LoaderCircle } from "lucide-react";
+import CreateReviewForm from "../../forms/CreateReviewForm";
+import GoogleMap from "../../ui/Map";
+import FormAlert from "../../ui/FormAlert";
+import EmailDoctorForm from "../../ui/EmailDoctorForm"; // Import the new component
 
 export default function DoctorPage() {
   const { slug } = useParams();
@@ -21,7 +21,6 @@ export default function DoctorPage() {
         const response = await api.get(`/doctors/${slug}`);
         setDoctor(response.data);
 
-        // Fetch coordinates from address
         const geocodeResponse = await api.get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
             response.data.address
@@ -33,7 +32,7 @@ export default function DoctorPage() {
           setCoordinates({ lat: location.lat, lng: location.lng });
         }
       } catch (error) {
-        console.error('Error fetching doctor data:', error);
+        console.error("Error fetching doctor data:", error);
       } finally {
         setLoading(false);
       }
@@ -77,23 +76,19 @@ export default function DoctorPage() {
   }
 
   if (!doctor) {
-    return <FormAlert error={{ message: 'Medico non trovato' }} />;
+    return <FormAlert error={{ message: "Medico non trovato" }} />;
   }
-
-  console.log(doctor);
 
   return (
     <>
-
       <section className="container mt-5">
-        <div className="row d-flex flex-wrap" style={{ alignItems: 'stretch' }}>
-
-          <div className="col-12 col-md-8 p-4 card-background ">
+        <div className="row d-flex flex-wrap" style={{ alignItems: "stretch" }}>
+          <div className="col-lg-8 p-4 card-background ">
             <h3 className="mb-4 fw-light">
-              Medico specialista in:{' '}
+              Medico specialista in:{" "}
               <span>
                 &ldquo;
-                {doctor.specializations}&ldquo;
+                {doctor.specializations.replaceAll(",", ", ")}&ldquo;
               </span>
             </h3>
             <h2 className="mb-5">
@@ -104,48 +99,48 @@ export default function DoctorPage() {
             <p>Indirizzo: {doctor.address}</p>
           </div>
 
-
           <div
-            className="col-12 col-md-4 mb-4"
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+            className="col-lg-4 mb-4 mb-md-0"
+            style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
             <div
               style={{
-                width: '100%',
-                height: '300px',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+                width: "100%",
+                height: "360px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <GoogleMap />
+              <GoogleMap coordinates={coordinates} />
             </div>
-
           </div>
         </div>
       </section>
-      <section className="cta-doctor d-flex w-100">
+      <section className="cta-doctor w-100">
         <button
-          className={`btn my-3 ${
+          className={`btn w-100 ${
             showEmailForm
-              ? 'btn-sm px-3 py-2 lh-1 btn-outline-danger fw-bold'
-              : 'btn-primary'
-          } ${showForm ? 'd-none' : ''}`}
+              ? "btn-sm px-3 py-2 my-3 btn-outline-danger fw-bold"
+              : "btn-primary mt-3"
+          } ${showForm ? "d-none" : ""}`}
           onClick={() => setShowEmailForm(!showEmailForm)}
         >
-          {showEmailForm ? 'Chiudi' : 'Contatta tramite e-mail'}
+          {showEmailForm ? "Chiudi" : "Contatta tramite e-mail"}
         </button>
 
         {/* bottone per recensione */}
         <button
-          className={`btn my-3  ${showEmailForm ? 'd-none' : ''} ${
+          className={`btn mt-3 w-100 ${
+            showEmailForm ? "d-none" : ""
+          } ${
             showForm
-              ? 'btn-sm px-3 py-2 lh-1 btn-outline-danger fw-bold'
-              : 'btn-primary  mx-2 px-3 py-2 lh-1'
+              ? "btn-sm px-3 py-2 my-3 btn-outline-danger fw-bold"
+              : "btn-primary px-3 ms-lg-3"
           }`}
           onClick={() => setShowForm(!showForm)}
         >
-          {showForm ? 'Chiudi' : 'Scrivi una recensione'}
+          {showForm ? "Chiudi" : "Scrivi una recensione"}
         </button>
       </section>
 
@@ -154,13 +149,6 @@ export default function DoctorPage() {
           <EmailDoctorForm doctorEmail={doctor.email} />
         </section>
       )}
-
-      <button
-        className={`btn btn-primary my-3 ${!showEmailForm ? "ms-2" : ""}`}
-        onClick={() => setShowForm(!showForm)}
-      >
-        {showForm ? "Nascondi Recensione" : "Scrivi una recensione"}
-      </button>
 
       {showForm && (
         <>
@@ -180,10 +168,10 @@ export default function DoctorPage() {
         <div className="mt-4">
           <p
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontWeight: 'bold',
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontWeight: "bold",
             }}
           >
             Media delle recensioni:
@@ -205,18 +193,18 @@ export default function DoctorPage() {
                   className="list-group-item"
                   key={review.id}
                   style={{
-                    padding: '15px',
-                    marginBottom: '15px',
-                    borderRadius: '8px',
-                    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+                    padding: "15px",
+                    marginBottom: "15px",
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
                   }}
                 >
                   <strong>{`${review.first_name} ${review.last_name}`}</strong>
                   <div
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
                     }}
                   >
                     {/* Stelle accanto al rating */}

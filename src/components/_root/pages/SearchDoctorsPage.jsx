@@ -128,11 +128,13 @@ export default function SearchDoctorsPage() {
               Toggle Filters
             </button>
           </div>
-          {error && (
-            <div className="alert alert-danger mt-4" role="alert">
-              {error}
-            </div>
-          )}
+          {error ||
+            (!results.length && !isLoading && !error && (
+              <div className="alert alert-danger mt-4" role="alert">
+                {error ||
+                  "Nessun risultato trovato. Prova a modificare i criteri di ricerca."}
+              </div>
+            ))}
           {!!results.length && (
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
               {results.map((doctor) => (
@@ -143,11 +145,6 @@ export default function SearchDoctorsPage() {
             </div>
           )}
           {isLoading && <Loader />}
-          {!results.length && !isLoading && !error && (
-            <div className="alert alert-info mt-4" role="alert">
-              Nessun risultato trovato. Prova a modificare i criteri di ricerca.
-            </div>
-          )}
         </main>
       </div>
     </div>

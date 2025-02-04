@@ -179,10 +179,14 @@ main {
   min-height: 600px;
 }
 
-@media screen and (min-width: 880px) {
+@media screen and (min-width: 991px) {
   .creation-form {
     max-width: 440px;
     margin: 0 auto;
+  }
+
+  .cta-doctor button {
+    width: fit-content !important;
   }
 }
 
