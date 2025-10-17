@@ -31,11 +31,3 @@
 - MySQL
 
 ---
-
-## 📦 Installazione
-
-1. Clona la repository
-
-```bash
-git clone https://github.com/alessiotegoni/bdoctors.git
-cd bdoctors
